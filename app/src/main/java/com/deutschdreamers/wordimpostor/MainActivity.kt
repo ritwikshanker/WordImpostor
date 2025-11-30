@@ -6,8 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,6 +31,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WordImpostorTheme {
+                val colorScheme = MaterialTheme.colorScheme
+
+                // Set system bar colors to match theme
+                SideEffect {
+                    val statusBarColor = colorScheme.surface.toArgb()
+                    val navigationBarColor = colorScheme.surface.toArgb()
+
+                    @Suppress("DEPRECATION")
+                    window.statusBarColor = statusBarColor
+                    @Suppress("DEPRECATION")
+                    window.navigationBarColor = navigationBarColor
+
+                    // Determine if we need light or dark icons based on background luminance
+                    // If surface is light (high luminance), use dark icons
+                    // If surface is dark (low luminance), use light icons
+                    val isLight = colorScheme.surface.luminance() > 0.5f
+
+                    val insetsController =
+                        WindowCompat.getInsetsController(window, window.decorView)
+                    insetsController.isAppearanceLightStatusBars = isLight
+                    insetsController.isAppearanceLightNavigationBars = isLight
+                }
+
                 WordImpostorApp()
             }
         }
