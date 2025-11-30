@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
@@ -30,41 +31,62 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WordImpostorTheme {
-                val colorScheme = MaterialTheme.colorScheme
-
-                // Set system bar colors to match theme
-                SideEffect {
-                    val statusBarColor = colorScheme.surface.toArgb()
-                    val navigationBarColor = colorScheme.surface.toArgb()
-
-                    @Suppress("DEPRECATION")
-                    window.statusBarColor = statusBarColor
-                    @Suppress("DEPRECATION")
-                    window.navigationBarColor = navigationBarColor
-
-                    // Determine if we need light or dark icons based on background luminance
-                    // If surface is light (high luminance), use dark icons
-                    // If surface is dark (low luminance), use light icons
-                    val isLight = colorScheme.surface.luminance() > 0.5f
-
-                    val insetsController =
-                        WindowCompat.getInsetsController(window, window.decorView)
-                    insetsController.isAppearanceLightStatusBars = isLight
-                    insetsController.isAppearanceLightNavigationBars = isLight
-                }
-
-                WordImpostorApp()
-            }
+            WordImpostorApp(window = window)
         }
     }
 }
 
 @Composable
-fun WordImpostorApp() {
+fun WordImpostorApp(window: android.view.Window) {
     val navController = rememberNavController()
     val wordRepository = remember { WordRepository() }
     val settingsRepository = remember { SettingsRepository(navController.context) }
+
+    // Collect settings to get theme preference
+    val settings by settingsRepository.settingsFlow.collectAsState(initial = GameSettings())
+
+    // Determine dark theme based on user preference
+    val systemInDarkTheme = isSystemInDarkTheme()
+    val darkTheme = when (settings.themeMode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.SYSTEM -> systemInDarkTheme
+    }
+
+    WordImpostorTheme(darkTheme = darkTheme) {
+        val colorScheme = MaterialTheme.colorScheme
+
+        // Set system bar colors to match theme
+        SideEffect {
+            val statusBarColor = colorScheme.surface.toArgb()
+            val navigationBarColor = colorScheme.surface.toArgb()
+
+            @Suppress("DEPRECATION")
+            window.statusBarColor = statusBarColor
+            @Suppress("DEPRECATION")
+            window.navigationBarColor = navigationBarColor
+
+            // Determine if we need light or dark icons based on background luminance
+            // If surface is light (high luminance), use dark icons
+            // If surface is dark (low luminance), use light icons
+            val isLight = colorScheme.surface.luminance() > 0.5f
+
+            val insetsController =
+                WindowCompat.getInsetsController(window, window.decorView)
+            insetsController.isAppearanceLightStatusBars = isLight
+            insetsController.isAppearanceLightNavigationBars = isLight
+        }
+
+        WordImpostorAppContent(settingsRepository, wordRepository, navController)
+    }
+}
+
+@Composable
+fun WordImpostorAppContent(
+    settingsRepository: SettingsRepository,
+    wordRepository: WordRepository,
+    navController: androidx.navigation.NavHostController
+) {
 
     val gameViewModel: GameViewModel = viewModel(
         factory = object : androidx.lifecycle.ViewModelProvider.Factory {

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.GameSettings
+import com.deutschdreamers.wordimpostor.data.model.ThemeMode
 import com.deutschdreamers.wordimpostor.data.model.TieVoteBehavior
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +26,7 @@ fun SettingsScreen(
     var timerDuration by remember { mutableIntStateOf(settings.timerDuration) }
     var allowSelfVoting by remember { mutableStateOf(settings.allowSelfVoting) }
     var tieVoteBehavior by remember { mutableStateOf(settings.tieVoteBehavior) }
+    var themeMode by remember { mutableStateOf(settings.themeMode) }
 
     Scaffold(
         topBar = {
@@ -106,6 +108,46 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Theme Settings
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "Theme",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        ThemeMode.entries.forEach { mode ->
+                            FilterChip(
+                                selected = themeMode == mode,
+                                onClick = { themeMode = mode },
+                                label = {
+                                    Text(
+                                        when (mode) {
+                                            ThemeMode.SYSTEM -> "System Default"
+                                            ThemeMode.LIGHT -> "Light"
+                                            ThemeMode.DARK -> "Dark"
+                                        }
+                                    )
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Voting Settings
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -176,7 +218,8 @@ fun SettingsScreen(
                             timerDuration = timerDuration,
                             difficulty = settings.difficulty,
                             allowSelfVoting = allowSelfVoting,
-                            tieVoteBehavior = tieVoteBehavior
+                            tieVoteBehavior = tieVoteBehavior,
+                            themeMode = themeMode
                         )
                     )
                     onBack()

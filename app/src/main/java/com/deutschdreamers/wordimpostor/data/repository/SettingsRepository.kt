@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
 import com.deutschdreamers.wordimpostor.data.model.GameSettings
+import com.deutschdreamers.wordimpostor.data.model.ThemeMode
 import com.deutschdreamers.wordimpostor.data.model.TieVoteBehavior
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -24,6 +25,7 @@ class SettingsRepository(private val context: Context) {
         val DIFFICULTY = stringPreferencesKey("difficulty")
         val ALLOW_SELF_VOTING = booleanPreferencesKey("allow_self_voting")
         val TIE_VOTE_BEHAVIOR = stringPreferencesKey("tie_vote_behavior")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
     }
 
     val settingsFlow: Flow<GameSettings> = context.dataStore.data.map { preferences ->
@@ -36,6 +38,9 @@ class SettingsRepository(private val context: Context) {
             allowSelfVoting = preferences[PreferencesKeys.ALLOW_SELF_VOTING] ?: false,
             tieVoteBehavior = TieVoteBehavior.valueOf(
                 preferences[PreferencesKeys.TIE_VOTE_BEHAVIOR] ?: TieVoteBehavior.NO_ELIMINATION.name
+            ),
+            themeMode = ThemeMode.valueOf(
+                preferences[PreferencesKeys.THEME_MODE] ?: ThemeMode.SYSTEM.name
             )
         )
     }
@@ -47,6 +52,7 @@ class SettingsRepository(private val context: Context) {
             preferences[PreferencesKeys.DIFFICULTY] = settings.difficulty.name
             preferences[PreferencesKeys.ALLOW_SELF_VOTING] = settings.allowSelfVoting
             preferences[PreferencesKeys.TIE_VOTE_BEHAVIOR] = settings.tieVoteBehavior.name
+            preferences[PreferencesKeys.THEME_MODE] = settings.themeMode.name
         }
     }
 
