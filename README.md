@@ -1,134 +1,70 @@
-# Word Impostor - Android Party Game
+# Word Impostor
 
-A complete pass-the-phone social deduction party game built with Kotlin and Jetpack Compose.
+A local pass-the-phone social deduction party game built with Kotlin and Jetpack Compose.
 
-## Game Description
+## Overview
 
-Word Impostor is a local multiplayer social deduction game where:
-- **Civilians** receive the same secret word
-- **Impostors** receive nothing and must blend in
-- Players take turns giving one-word clues
-- Players discuss and vote to eliminate suspects
-- **Civilians win** if all impostors are eliminated
-- **Impostors win** if their count equals or exceeds remaining players
+**Civilians** receive the same secret word. **Impostors** receive nothing and must blend in.  
+Players give one-word clues, discuss, and vote to eliminate suspects.
+
+**Win Conditions:**
+- Civilians win: All impostors eliminated
+- Impostors win: Impostor count ≥ remaining players
 
 ## Features
 
-### Core Gameplay
-- ✅ 3-12 players support
-- ✅ 1-3 impostors
-- ✅ Pass-the-phone role reveal with animations
-- ✅ One-word clue system
-- ✅ Discussion phase
-- ✅ Voting with configurable tie-breaker rules
-- ✅ Automatic win condition detection
-
-### Game Settings
-- ✅ Timer per clue (15-120 seconds, or disabled)
-- ✅ Three difficulty levels (Easy/Medium/Hard word pools)
-- ✅ Allow/disallow self-voting
-- ✅ Tie vote behavior (No elimination / Random / Revote)
-- ✅ Settings persistence with DataStore
-
-### UI/UX
-- ✅ Material 3 Design
-- ✅ Dark mode support
-- ✅ Smooth animations (fade, scale, slide)
-- ✅ Pass-the-phone enforced screens
-- ✅ End game summary with full history
-
-### Technical
-- ✅ MVVM Architecture
-- ✅ Single Activity with Navigation Compose
-- ✅ StateFlow for reactive state management
-- ✅ Rotation-safe (ViewModel state preservation)
-- ✅ Type-safe navigation with Kotlin Serialization
+- 3-12 players, 1-3 impostors
+- Three difficulty levels (Easy/Medium/Hard word pools)
+- Optional timer per clue (15-120 seconds)
+- Configurable voting rules (tie-breakers, self-voting)
+- Pass-the-phone role reveals with animations
+- Material 3 Design with dark mode
+- MVVM architecture with StateFlow
+- Settings persistence with DataStore
+- Rotation-safe state management
 
 ## Project Structure
 
 ```
 app/src/main/java/com/deutschdreamers/wordimpostor/
-├── MainActivity.kt                      # Single Activity entry point
+├── MainActivity.kt
 ├── data/
-│   ├── model/
-│   │   ├── Difficulty.kt               # Word difficulty levels
-│   │   ├── GamePhase.kt                # Game state machine phases
-│   │   ├── GameSettings.kt             # User configurable settings
-│   │   ├── GameState.kt                # Complete game state
-│   │   ├── Player.kt                   # Player data model
-│   │   ├── Role.kt                     # Civilian/Impostor roles
-│   │   └── VoteResult.kt               # Voting result data
-│   └── repository/
-│       ├── SettingsRepository.kt       # DataStore settings persistence
-│       └── WordRepository.kt           # Word pools (40+ words per difficulty)
+│   ├── model/              # Game models (Player, GameState, GamePhase, etc.)
+│   └── repository/         # WordRepository, SettingsRepository
 ├── ui/
-│   ├── navigation/
-│   │   └── Screen.kt                   # Type-safe navigation routes
-│   ├── screens/
-│   │   ├── HomeScreen.kt               # Main menu
-│   │   ├── SetupScreen.kt              # Player/game configuration
-│   │   ├── SettingsScreen.kt           # Game settings
-│   │   ├── RoleRevealScreen.kt         # Animated role reveals
-│   │   ├── ClueRoundScreen.kt          # Clue giving phase
-│   │   ├── DiscussionScreen.kt         # Clue review & discussion
-│   │   ├── VotingScreen.kt             # Voting phase
-│   │   ├── EliminationRevealScreen.kt  # Elimination animation
-│   │   └── GameEndScreen.kt            # Winner & game summary
-│   ├── theme/
-│   │   ├── Color.kt
-│   │   ├── Theme.kt
-│   │   └── Type.kt
-│   └── viewmodel/
-│       └── GameViewModel.kt            # Complete game logic & state machine
+│   ├── navigation/         # Type-safe navigation
+│   ├── screens/            # All game screens (9 screens)
+│   ├── theme/              # Material 3 theming
+│   └── viewmodel/          # GameViewModel (state machine)
 ```
 
-## Dependencies
+## Tech Stack
 
-All dependencies are managed in `gradle/libs.versions.toml`:
+- Kotlin 2.0.21
+- Jetpack Compose (Material 3)
+- Navigation Compose
+- Lifecycle ViewModel
+- DataStore Preferences
+- Kotlinx Serialization
 
-- **Kotlin**: 2.0.21
-- **Compose BOM**: 2024.09.00
-- **Navigation Compose**: 2.8.5
-- **Lifecycle ViewModel Compose**: 2.9.4
-- **DataStore Preferences**: 1.1.1
-- **Kotlinx Serialization**: 1.7.3
+## Building
 
-## Building the Project
+**Requirements:**
+- Android Studio Koala or later
+- JDK 11+
+- Min SDK: 26 (Android 8.0)
+- Target SDK: 35
 
-### Requirements
-- Android Studio Koala (2024.1.1) or later
-- JDK 11 or higher
-- Android SDK 35
-- Minimum Android API 26 (Android 8.0)
+**Steps:**
+1. Open project in Android Studio
+2. Sync Gradle files
+3. Run on device/emulator
 
-### Steps
-
-1. **Open in Android Studio**
-   ```
-   File > Open > Select WordImpostor folder
-   ```
-
-2. **Sync Gradle**
-   - Android Studio will automatically prompt to sync
-   - Or click: File > Sync Project with Gradle Files
-
-3. **Build the project**
-   ```
-   Build > Make Project
-   ```
-   Or use terminal:
-   ```bash
-   ./gradlew build
-   ```
-
-4. **Run on device/emulator**
-   ```
-   Run > Run 'app'
-   ```
-   Or use terminal:
-   ```bash
-   ./gradlew installDebug
-   ```
+Or via terminal:
+```bash
+./gradlew build
+./gradlew installDebug
+```
 
 ## Game Flow
 
@@ -239,60 +175,27 @@ The app includes smooth animations throughout:
 
 All animations use Compose's `AnimatedVisibility` and `AnimatedContent`.
 
-## Testing
+## Download
 
-The game can be tested with:
-- **Minimum players**: 3 (2 civilians, 1 impostor)
-- **Maximum players**: 12
-- **Typical game**: 4-6 players, 1-2 impostors
-- **Quick test**: 3 players, 1 impostor, Easy difficulty, no timer
-
-## Known Limitations
-
-- Local play only (pass-the-phone)
-- No AI players
-- English language only
-- Word pools are hardcoded (not user-expandable)
-
-## Future Enhancements
-
-Potential features for future versions:
-- Custom word lists
-- Multiple language support
-- Game statistics tracking
-- Player profiles
-- Network multiplayer
-- Word category selection
-- Accessibility improvements (TalkBack, large text)
-
-## Architecture Decisions
-
-### Why Single Activity?
-- Simpler navigation state management
-- Better shared ViewModel scope
-- Modern Android best practice
-
-### Why StateFlow over LiveData?
-- Better Kotlin coroutines integration
-- Null safety
-- More flexible operators
-
-### Why Hardcoded Word Lists?
-- No external dependencies
-- Offline-first
-- Predictable game experience
-- Easy to modify/extend
-
-### Why DataStore over SharedPreferences?
-- Coroutine support
-- Type safety
-- Observability
+Available on Google Play Store (coming soon)
 
 ## License
 
-This project is created for educational purposes.
+This project is **open source** and **completely free** - no ads, no in-app purchases, ever.
+
+Licensed under the MIT License - see the LICENSE file for details.
+
+## Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
+- Improve translations
 
 ## Credits
+
+Made with ❤️ by Deutsch Dreamers
 
 Built with:
 - Jetpack Compose
