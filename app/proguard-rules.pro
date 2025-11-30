@@ -5,17 +5,51 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep line numbers for debugging stack traces
+-keepattributes SourceFile,LineNumberTable
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep source file names
+-renamesourcefileattribute SourceFile
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Jetpack Compose
+-dontwarn androidx.compose.**
+-keep class androidx.compose.** { *; }
+
+# Kotlin Serialization
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.AnnotationsKt
+-keepclassmembers class kotlinx.serialization.json.** {
+    *** Companion;
+}
+-keepclasseswithmembers class kotlinx.serialization.json.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+-keep,includedescriptorclasses class com.deutschdreamers.wordimpostor.**$$serializer { *; }
+-keepclassmembers class com.deutschdreamers.wordimpostor.** {
+    *** Companion;
+}
+-keepclasseswithmembers class com.deutschdreamers.wordimpostor.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+# Keep data classes for serialization
+-keep class com.deutschdreamers.wordimpostor.data.model.** { *; }
+-keep class com.deutschdreamers.wordimpostor.ui.navigation.** { *; }
+
+# DataStore
+-keep class androidx.datastore.*.** { *; }
+
+# Coroutines
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
+
+# ViewModel
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>();
+}
+-keep class * extends androidx.lifecycle.AndroidViewModel {
+    <init>(android.app.Application);
+}
