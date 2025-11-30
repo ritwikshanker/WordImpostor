@@ -1,0 +1,54 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Speech bubble body -->
+    <path
+        android:pathData="M24,24 L84,24 A8,8 0 0,1 92,32 L92,66 A8,8 0 0,1 84,74 L24,74 A8,8 0 0,1 16,66 L16,32 A8,8 0 0,1 24,24 Z"
+        android:fillColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeColor="#E0E0E0"/>
+
+    <!-- Speech bubble tail -->
+    <path
+        android:pathData="M70,74 L78,86 L62,74 Z"
+        android:fillColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:strokeColor="#E0E0E0"/>
+
+    <!-- Question mark - top part (curve) -->
+    <path
+        android:pathData="M48,36 A8,8 0 1,1 60,44 L60,52 A4,4 0 0,1 56,56 L52,56 A4,4 0 0,1 48,52 L48,48 A8,8 0 0,1 56,40"
+        android:fillColor="#1976D2"
+        android:strokeWidth="3"
+        android:strokeColor="#1976D2"
+        android:strokeLineCap="round"/>
+
+    <!-- Question mark - dot -->
+    <path
+        android:pathData="M54,64 m-3,0 a3,3 0 1,1 6,0 a3,3 0 1,1 -6,0"
+        android:fillColor="#1976D2"/>
+
+    <!-- "W" Badge circle -->
+    <path
+        android:pathData="M28,22 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0"
+        android:fillColor="#FF6B35"/>
+
+    <!-- "W" Letter -->
+    <path
+        android:pathData="M20,17 L22,27 L24,21 L26,27 L28,17"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:fillColor="@android:color/transparent"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+
+    <!-- Optional: Add subtle impostor mask icon in corner -->
+    <path
+        android:pathData="M82,80 A4,4 0 0,1 78,84 L74,84 A4,4 0 0,1 70,80 L70,76 A4,4 0 0,1 74,72 L78,72 A4,4 0 0,1 82,76 Z"
+        android:fillColor="#E91E63"
+        android:fillAlpha="0.3"/>
+</vector>
+
