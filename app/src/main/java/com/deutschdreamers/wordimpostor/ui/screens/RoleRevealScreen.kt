@@ -3,6 +3,8 @@ package com.deutschdreamers.wordimpostor.ui.screens
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -49,8 +51,9 @@ fun RoleRevealScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -68,11 +71,12 @@ fun RoleRevealScreen(
                         style = MaterialTheme.typography.displayMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
                 // Ready Button or Role Reveal
                 if (!showRole) {
@@ -83,7 +87,7 @@ fun RoleRevealScreen(
                         Button(
                             onClick = { showRole = true },
                             modifier = Modifier
-                                .fillMaxWidth(0.6f)
+                                .fillMaxWidth(0.8f)
                                 .height(56.dp)
                         ) {
                             Text("Tap to Reveal Role", style = MaterialTheme.typography.titleMedium)
@@ -111,7 +115,7 @@ fun RoleRevealScreen(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Column(
-                                    modifier = Modifier.padding(32.dp),
+                                    modifier = Modifier.padding(20.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Text(
@@ -120,10 +124,11 @@ fun RoleRevealScreen(
                                         else
                                             "You are a",
                                         style = MaterialTheme.typography.titleLarge,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth()
                                     )
 
-                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Spacer(modifier = Modifier.height(12.dp))
 
                                     Text(
                                         text = if (currentPlayer.role == Role.IMPOSTOR)
@@ -136,20 +141,22 @@ fun RoleRevealScreen(
                                             MaterialTheme.colorScheme.error
                                         else
                                             MaterialTheme.colorScheme.primary,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth()
                                     )
 
                                     if (currentPlayer.role == Role.CIVILIAN) {
-                                        Spacer(modifier = Modifier.height(24.dp))
+                                        Spacer(modifier = Modifier.height(20.dp))
 
                                         HorizontalDivider()
 
-                                        Spacer(modifier = Modifier.height(24.dp))
+                                        Spacer(modifier = Modifier.height(20.dp))
 
                                         Text(
                                             text = "Your word is:",
                                             style = MaterialTheme.typography.bodyLarge,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier.fillMaxWidth()
                                         )
 
                                         Spacer(modifier = Modifier.height(8.dp))
@@ -159,28 +166,30 @@ fun RoleRevealScreen(
                                             style = MaterialTheme.typography.headlineLarge,
                                             fontWeight = FontWeight.Bold,
                                             color = MaterialTheme.colorScheme.primary,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier.fillMaxWidth()
                                         )
                                     } else {
-                                        Spacer(modifier = Modifier.height(16.dp))
+                                        Spacer(modifier = Modifier.height(12.dp))
 
                                         Text(
                                             text = "You must blend in without knowing the word!",
                                             style = MaterialTheme.typography.bodyLarge,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier.fillMaxWidth()
                                         )
                                     }
                                 }
                             }
 
-                            Spacer(modifier = Modifier.height(32.dp))
+                            Spacer(modifier = Modifier.height(24.dp))
 
                             Button(
                                 onClick = {
                                     showPassMessage = true
                                 },
                                 modifier = Modifier
-                                    .fillMaxWidth(0.6f)
+                                    .fillMaxWidth(0.8f)
                                     .height(56.dp)
                             ) {
                                 Text("Continue", style = MaterialTheme.typography.titleMedium)
@@ -203,7 +212,7 @@ fun RoleRevealScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(32.dp),
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -211,7 +220,8 @@ fun RoleRevealScreen(
                             text = "Pass the phone",
                             style = MaterialTheme.typography.displayMedium,
                             fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
                         )
 
                         Spacer(modifier = Modifier.height(32.dp))
@@ -219,7 +229,7 @@ fun RoleRevealScreen(
                         Button(
                             onClick = onContinue,
                             modifier = Modifier
-                                .fillMaxWidth(0.6f)
+                                .fillMaxWidth(0.8f)
                                 .height(56.dp)
                         ) {
                             Text("Next Player", style = MaterialTheme.typography.titleMedium)
