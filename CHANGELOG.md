@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.1 (2024-12-09)
+## Version 3.1 (2025-12-09)
 
 ### New Features
 
@@ -40,7 +40,7 @@
 
 ---
 
-## Version 1.0 (Initial Release)
+## Version 3.0 (Initial Release - First Public Release)
 
 ### Features
 
