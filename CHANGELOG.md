@@ -2,41 +2,64 @@
 
 ## Version 3.1 (2025-12-09)
 
-### New Features
+### 🎨 UI/UX Improvements
 
 - **Complete Clue History**: View all clues from previous rounds during discussion phase, not just
   the current round
-- **Theme Selector**: Switch between Light, Dark, and System themes directly from Settings
-- **Enhanced Word Pool**: Added significantly more words to Easy and Medium difficulty levels for
-  better variety
+    - Previous rounds shown with distinct visual styling
+    - Current round highlighted in primary color
+    - Easy to scroll through full game history
+- **Theme Selector**: Added ability to switch between Light, Dark, and System themes in Settings
+- **Default Theme**: Changed default theme to Light mode for better out-of-box experience
+- **Better Visual Hierarchy**: Improved distinction between current and past rounds in clue history
 
-### Improvements
+### ⌨️ Keyboard & Input Improvements
 
-- **Better Keyboard Support**:
+- **Smart Keyboard Navigation**:
     - Added "Next" button on keyboard when entering player names for faster setup
-    - Fixed keyboard suggestions now work properly when entering clues
-- **Improved Game Flow**:
-    - Game now properly continues to next round when no one is eliminated (tie votes)
-    - Fixed navigation issues when finalizing votes without casting any
-- **UI Polish**:
-    - System status bar and navigation bar now match app theme colors
-    - Better visual distinction between current and previous rounds in clue history
-    - Improved contrast and readability in both light and dark themes
+  - Last field shows "Done" button to dismiss keyboard
+  - Auto-focus moves to next field when pressing "Next"
+- **Keyboard Suggestions Fixed**:
+    - Keyboard word suggestions now work properly when entering clues
+    - Tapping suggestions automatically extracts first word
 
-### Bug Fixes
+### 🎮 Gameplay Fixes
 
-- Fixed game hanging when no votes are cast during voting phase
-- Fixed game not progressing when tie vote results in no elimination
-- Fixed win condition check (Impostors now win correctly when they equal or outnumber Civilians)
+- **Win Condition Fixed**: Impostors now correctly win when they equal or outnumber Civilians (not
+  just when they outnumber)
+- **No Elimination Flow**: Game properly continues to next round when no one is eliminated due to
+  tie votes
+- **No Votes Cast**: Fixed game hanging when voting is finalized without any votes being cast
+- **Navigation Improvements**: Smooth transitions between all game phases
+
+### 📝 Enhanced Word Pool
+
+- **Easy Difficulty**: Added 50+ new words including more animals, fruits, foods, and everyday
+  objects
+- **Medium Difficulty**: Added 50+ new words including more occupations, tools, and common items
+- **Better Variety**: Reduced repetition and improved word selection across all difficulty levels
+
+### 🐛 Bug Fixes
+
+- Fixed game hanging on white screen when finalizing votes without casting any
+- Fixed game not progressing when tie vote behavior is set to NO_ELIMINATION
 - Fixed keyboard suggestions not being accepted in clue input field
-- Fixed system bars appearing white in dark theme
 - Fixed UI elements being hidden behind system navigation bars on some devices
+- Fixed edge-to-edge display issues on phones with gesture navigation
 
-### Technical Updates
+### ℹ️ About Screen Updates
 
-- Updated version code to 2 (version 1.1)
-- Improved edge-to-edge display compatibility
-- Better state management across game phases
+- Updated version number to 3.1
+- Updated creator information to Ritwik Shanker
+- Updated copyright information
+
+### 🔧 Technical Improvements
+
+- Version code updated to 4 (version 3.1)
+- Improved state management for round history
+- Better handling of edge cases in voting phase
+- Enhanced navigation flow between game phases
+- Improved theme switching responsiveness
 
 ---
 
