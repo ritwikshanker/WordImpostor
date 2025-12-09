@@ -189,6 +189,8 @@ fun WordImpostorAppContent(
         composable<Screen.Discussion> {
             DiscussionScreen(
                 players = gameState.players,
+                roundHistory = gameState.roundHistory,
+                currentRoundNumber = gameState.roundHistory.size + 1,
                 onStartVoting = {
                     gameViewModel.startVoting()
                     navController.navigate(Screen.Voting)

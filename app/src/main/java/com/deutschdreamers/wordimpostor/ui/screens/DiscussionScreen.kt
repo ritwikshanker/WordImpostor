@@ -16,6 +16,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun DiscussionScreen(
     players: List<Player>,
+    roundHistory: List<com.deutschdreamers.wordimpostor.data.model.RoundHistory>,
+    currentRoundNumber: Int,
     onStartVoting: () -> Unit
 ) {
     var discussionTime by remember { mutableIntStateOf(180) }
@@ -102,11 +104,66 @@ fun DiscussionScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Clues List
+            // Clues List - All Rounds
             LazyColumn(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                // Show all previous rounds from history
+                roundHistory.forEach { round ->
+                    item {
+                        Text(
+                            text = "Round ${round.roundNumber}",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+
+                    items(players.filter { round.clues.containsKey(it.id) }) { player ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = player.name,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.weight(1f)
+                                )
+
+                                Text(
+                                    text = round.clues[player.id] ?: "—",
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Show current round
+                item {
+                    Text(
+                        text = "Round $currentRoundNumber",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+
                 items(players.filter { !it.isEliminated }) { player ->
                     Card(
                         modifier = Modifier.fillMaxWidth()
