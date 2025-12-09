@@ -2,6 +2,7 @@ package com.deutschdreamers.wordimpostor.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -11,7 +12,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
@@ -27,6 +31,7 @@ fun SetupScreen(
     var impostorCount by remember { mutableIntStateOf(1) }
     var playerNames by remember { mutableStateOf(List(playerCount) { "" }) }
     var selectedDifficulty by remember { mutableStateOf(difficulty) }
+    val focusManager = LocalFocusManager.current
 
     // Update player names list when player count changes
     LaunchedEffect(playerCount) {
@@ -170,7 +175,12 @@ fun SetupScreen(
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
                     keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = if (index == playerNames.lastIndex) ImeAction.Done else ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) },
+                        onDone = { focusManager.clearFocus() }
                     ),
                     singleLine = true
                 )
