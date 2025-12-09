@@ -92,9 +92,15 @@ fun ClueRoundScreen(
             OutlinedTextField(
                 value = clueText,
                 onValueChange = {
-                    // Allow only single word (no spaces)
-                    if (!it.contains(" ") && it.length <= 20) {
-                        clueText = it
+                    // Extract first word if spaces are present (for keyboard suggestions)
+                    val newText = if (it.contains(" ")) {
+                        it.substringBefore(" ")
+                    } else {
+                        it
+                    }
+                    // Allow only single word up to 20 characters
+                    if (newText.length <= 20) {
+                        clueText = newText
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
