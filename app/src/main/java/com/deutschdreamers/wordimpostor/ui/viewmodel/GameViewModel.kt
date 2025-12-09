@@ -204,10 +204,21 @@ class GameViewModel(
             val voteCounts = currentPhase.votes
 
             if (voteCounts.isEmpty()) {
-                // No votes cast - move to discussion
-                _gameState.value = _gameState.value.copy(
-                    currentPhase = GamePhase.Discussion
+                // No votes cast - save round and start new round
+                val clues = _gameState.value.players.associate { it.id to it.clue }
+                val roundHistory = _gameState.value.roundHistory + RoundHistory(
+                    roundNumber = _gameState.value.roundHistory.size + 1,
+                    clues = clues,
+                    votes = emptyMap(),
+                    eliminatedPlayerId = null
                 )
+
+                _gameState.value = _gameState.value.copy(
+                    roundHistory = roundHistory
+                )
+
+                resetClues()
+                startClueRound()
                 return
             }
 
@@ -224,11 +235,21 @@ class GameViewModel(
                     eliminatePlayer(playersWithMaxVotes.random())
                 }
                 _gameState.value.settings.tieVoteBehavior == TieVoteBehavior.NO_ELIMINATION -> {
-                    // No elimination - back to discussion
-                    resetClues()
-                    _gameState.value = _gameState.value.copy(
-                        currentPhase = GamePhase.Discussion
+                    // No elimination - save round history and start new round
+                    val clues = _gameState.value.players.associate { it.id to it.clue }
+                    val roundHistory = _gameState.value.roundHistory + RoundHistory(
+                        roundNumber = _gameState.value.roundHistory.size + 1,
+                        clues = clues,
+                        votes = currentVotes.toMap(),
+                        eliminatedPlayerId = null
                     )
+
+                    _gameState.value = _gameState.value.copy(
+                        roundHistory = roundHistory
+                    )
+
+                    resetClues()
+                    startClueRound()
                 }
                 else -> {
                     // Revote - back to voting

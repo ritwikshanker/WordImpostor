@@ -226,6 +226,13 @@ fun WordImpostorAppContent(
                         popUpTo(Screen.Voting) { inclusive = true }
                     }
                 }
+            } else if (currentPhase is GamePhase.ClueRound) {
+                // No votes or no elimination - start new round
+                LaunchedEffect(Unit) {
+                    navController.navigate(Screen.ClueRound) {
+                        popUpTo(Screen.Voting) { inclusive = true }
+                    }
+                }
             }
         }
 
