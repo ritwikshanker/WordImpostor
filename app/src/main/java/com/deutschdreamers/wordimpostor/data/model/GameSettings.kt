@@ -6,7 +6,7 @@ data class GameSettings(
     val difficulty: Difficulty = Difficulty.MEDIUM,
     val allowSelfVoting: Boolean = false,
     val tieVoteBehavior: TieVoteBehavior = TieVoteBehavior.NO_ELIMINATION,
-    val themeMode: ThemeMode = ThemeMode.SYSTEM
+    val themeMode: ThemeMode = ThemeMode.LIGHT
 )
 
 enum class TieVoteBehavior {
