@@ -56,20 +56,26 @@ fun DiscussionScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "Discussion Timer: $discussionTime s",
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     if (!timerRunning) {
-                        Button(onClick = { timerRunning = true }) {
+                        Button(
+                            onClick = { timerRunning = true },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             Text("Start Timer")
                         }
                     } else {
@@ -77,7 +83,8 @@ fun DiscussionScreen(
                             onClick = { timerRunning = false },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.error
-                            )
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Stop")
                         }
