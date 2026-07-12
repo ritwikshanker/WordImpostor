@@ -1,5 +1,6 @@
 package com.deutschdreamers.wordimpostor.ui.screens
 
+import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,6 +28,8 @@ fun SettingsScreen(
     var allowSelfVoting by remember { mutableStateOf(settings.allowSelfVoting) }
     var tieVoteBehavior by remember { mutableStateOf(settings.tieVoteBehavior) }
     var themeMode by remember { mutableStateOf(settings.themeMode) }
+    var useDynamicColor by remember { mutableStateOf(settings.dynamicColor) }
+    val dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
     Scaffold(
         topBar = {
@@ -143,6 +146,29 @@ fun SettingsScreen(
                             )
                         }
                     }
+
+                    if (dynamicColorSupported) {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Use device colors")
+                                Text(
+                                    text = "Match your phone's Material You palette",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Switch(
+                                checked = useDynamicColor,
+                                onCheckedChange = { useDynamicColor = it }
+                            )
+                        }
+                    }
                 }
             }
 
@@ -219,7 +245,8 @@ fun SettingsScreen(
                             difficulty = settings.difficulty,
                             allowSelfVoting = allowSelfVoting,
                             tieVoteBehavior = tieVoteBehavior,
-                            themeMode = themeMode
+                            themeMode = themeMode,
+                            dynamicColor = useDynamicColor
                         )
                     )
                     onBack()

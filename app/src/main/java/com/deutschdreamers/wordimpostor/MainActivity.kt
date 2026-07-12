@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.deutschdreamers.wordimpostor.data.model.*
 import com.deutschdreamers.wordimpostor.data.repository.SettingsRepository
 import com.deutschdreamers.wordimpostor.data.repository.WordRepository
+import com.deutschdreamers.wordimpostor.review.ReviewController
 import com.deutschdreamers.wordimpostor.ui.navigation.Screen
 import com.deutschdreamers.wordimpostor.ui.screens.*
 import com.deutschdreamers.wordimpostor.ui.theme.WordImpostorTheme
@@ -54,7 +56,7 @@ fun WordImpostorApp() {
         ThemeMode.SYSTEM -> systemInDarkTheme
     }
 
-    WordImpostorTheme(darkTheme = darkTheme) {
+    WordImpostorTheme(darkTheme = darkTheme, dynamicColor = settings.dynamicColor) {
         // With enableEdgeToEdge() the system bars are transparent and draw over app
         // content (Android 15+ contract); insets are consumed via safeDrawingPadding().
         // We only need to set the bar icon contrast: dark icons on a light theme,
@@ -268,6 +270,16 @@ fun WordImpostorAppContent(
         composable<Screen.GameEnd> {
             val currentPhase = gameState.currentPhase
             if (currentPhase is GamePhase.GameEnd) {
+                // A finished game is a positive moment: count it and, when the
+                // player has played enough, ask for a Play Store review. The
+                // flow is gated + best-effort, so it never interrupts gameplay.
+                val context = LocalContext.current
+                LaunchedEffect(Unit) {
+                    settingsRepository.incrementGamesCompleted()
+                    (context as? Activity)?.let { activity ->
+                        ReviewController.maybeRequestReview(activity, settingsRepository)
+                    }
+                }
                 GameEndScreen(
                     winner = currentPhase.winner,
                     players = gameState.players,

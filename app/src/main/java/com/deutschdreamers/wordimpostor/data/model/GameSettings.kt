@@ -6,7 +6,9 @@ data class GameSettings(
     val difficulty: Difficulty = Difficulty.MEDIUM,
     val allowSelfVoting: Boolean = false,
     val tieVoteBehavior: TieVoteBehavior = TieVoteBehavior.NO_ELIMINATION,
-    val themeMode: ThemeMode = ThemeMode.LIGHT
+    val themeMode: ThemeMode = ThemeMode.SYSTEM,
+    // Material You dynamic color is opt-in; the brand palette is the default look.
+    val dynamicColor: Boolean = false
 )
 
 enum class TieVoteBehavior {

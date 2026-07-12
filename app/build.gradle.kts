@@ -13,8 +13,8 @@ android {
         applicationId = "com.deutschdreamers.wordimpostor"
         minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "3.1.1"
+        versionCode = 6
+        versionName = "3.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -73,6 +73,9 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Google Play In-App Review
+    implementation(libs.play.review.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

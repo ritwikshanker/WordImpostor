@@ -1,5 +1,36 @@
 # Changelog
 
+## Version 3.2.0 (2026-07-12)
+
+### 🎨 Brand Redesign
+
+- **New custom color palette**: Word Impostor now has its own identity — a mystery-violet primary,
+  fresh teal, and warm amber accents — replacing the default template colors in both light and dark
+  modes.
+- **Refined typography**: bolder, tighter headings and a fuller type scale for a more polished,
+  "party game" feel.
+- **Material You is now opt-in**: the app ships with the new brand look by default. On Android 12+,
+  turn on **Settings → Use device colors** to match your phone's palette instead.
+- **Cold-start polish**: the launch background now matches the brand surface colors, so there's no
+  color flash before the app draws.
+
+### ⭐ Rate the Game
+
+- Added a Google Play in-app review prompt that appears at a natural moment — after you've finished
+  a
+  few games — so you can rate Word Impostor without leaving the app.
+
+### 🐛 Bug Fixes
+
+- Fixed the default theme setting not matching what the app actually applied on first launch.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.2.0 (version code 6).
+- Integrated the Google Play In-App Review library.
+
+---
+
 ## Version 3.1 (2025-12-09)
 
 ### 🎨 UI/UX Improvements
