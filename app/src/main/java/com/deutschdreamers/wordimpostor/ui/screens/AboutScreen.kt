@@ -1,5 +1,6 @@
 package com.deutschdreamers.wordimpostor.ui.screens
 
+import com.deutschdreamers.wordimpostor.BuildConfig
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -51,7 +52,7 @@ fun AboutScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Version 3.1",
+                text = "Version ${BuildConfig.VERSION_NAME}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

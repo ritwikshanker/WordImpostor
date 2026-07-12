@@ -13,8 +13,8 @@ android {
         applicationId = "com.deutschdreamers.wordimpostor"
         minSdk = 26
         targetSdk = 36
-        versionCode = 4
-        versionName = "3.1"
+        versionCode = 5
+        versionName = "3.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -47,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     buildToolsVersion = "36.0.0"
 }

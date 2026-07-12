@@ -1,5 +1,6 @@
 package com.deutschdreamers.wordimpostor
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,10 +9,10 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -31,13 +32,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WordImpostorApp(window = window)
+            WordImpostorApp()
         }
     }
 }
 
 @Composable
-fun WordImpostorApp(window: android.view.Window) {
+fun WordImpostorApp() {
     val navController = rememberNavController()
     val wordRepository = remember { WordRepository() }
     val settingsRepository = remember { SettingsRepository(navController.context) }
@@ -54,30 +55,30 @@ fun WordImpostorApp(window: android.view.Window) {
     }
 
     WordImpostorTheme(darkTheme = darkTheme) {
-        val colorScheme = MaterialTheme.colorScheme
-
-        // Set system bar colors to match theme
-        SideEffect {
-            val statusBarColor = colorScheme.surface.toArgb()
-            val navigationBarColor = colorScheme.surface.toArgb()
-
-            @Suppress("DEPRECATION")
-            window.statusBarColor = statusBarColor
-            @Suppress("DEPRECATION")
-            window.navigationBarColor = navigationBarColor
-
-            // Determine if we need light or dark icons based on background luminance
-            // If surface is light (high luminance), use dark icons
-            // If surface is dark (low luminance), use light icons
-            val isLight = colorScheme.surface.luminance() > 0.5f
-
-            val insetsController =
-                WindowCompat.getInsetsController(window, window.decorView)
-            insetsController.isAppearanceLightStatusBars = isLight
-            insetsController.isAppearanceLightNavigationBars = isLight
+        // With enableEdgeToEdge() the system bars are transparent and draw over app
+        // content (Android 15+ contract); insets are consumed via safeDrawingPadding().
+        // We only need to set the bar icon contrast: dark icons on a light theme,
+        // light icons on a dark theme.
+        val view = LocalView.current
+        if (!view.isInEditMode) {
+            SideEffect {
+                val window = (view.context as Activity).window
+                val insetsController = WindowCompat.getInsetsController(window, view)
+                insetsController.isAppearanceLightStatusBars = !darkTheme
+                insetsController.isAppearanceLightNavigationBars = !darkTheme
+            }
         }
 
-        WordImpostorAppContent(settingsRepository, wordRepository, navController)
+        // Full-bleed themed background so the transparent status/navigation bar
+        // regions show the app's background color (following the in-app dark/light
+        // setting) instead of the white window background. The content inside is
+        // inset away from the bars via safeDrawingPadding().
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            WordImpostorAppContent(settingsRepository, wordRepository, navController)
+        }
     }
 }
 
