@@ -1,6 +1,6 @@
 # Word Impostor
 
-A local pass-the-phone social deduction party game built with Kotlin and Jetpack Compose.
+A local pass-the-phone social deduction word game built with Kotlin and Jetpack Compose.
 
 ## Overview
 
