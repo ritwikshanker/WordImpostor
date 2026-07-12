@@ -53,3 +53,6 @@
 -keep class * extends androidx.lifecycle.AndroidViewModel {
     <init>(android.app.Application);
 }
+
+# Google Play Services
+-dontwarn com.google.android.gms.common.annotation.NoNullnessRewrite
