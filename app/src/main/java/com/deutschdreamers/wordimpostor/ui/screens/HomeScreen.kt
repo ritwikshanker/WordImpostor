@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
+import com.deutschdreamers.wordimpostor.ui.components.SecondaryButton
 
 @Composable
 fun HomeScreen(
@@ -45,36 +47,15 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(64.dp))
 
-            Button(
-                onClick = onNewGame,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("New Game", style = MaterialTheme.typography.titleMedium)
-            }
+            PrimaryButton(text = "New Game", onClick = onNewGame)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(
-                onClick = onSettings,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Settings", style = MaterialTheme.typography.titleMedium)
-            }
+            SecondaryButton(text = "Settings", onClick = onSettings)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(
-                onClick = onAbout,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("About", style = MaterialTheme.typography.titleMedium)
-            }
+            SecondaryButton(text = "About", onClick = onAbout)
 
             Spacer(modifier = Modifier.height(32.dp))
 

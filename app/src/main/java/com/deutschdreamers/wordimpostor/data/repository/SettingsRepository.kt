@@ -29,6 +29,7 @@ class SettingsRepository(private val context: Context) {
         val TIE_VOTE_BEHAVIOR = stringPreferencesKey("tie_vote_behavior")
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DYNAMIC_COLOR = booleanPreferencesKey("dynamic_color")
+        val SOUND_HAPTICS_ENABLED = booleanPreferencesKey("sound_haptics_enabled")
 
         // In-app review tracking (app-level, not part of game settings).
         val GAMES_COMPLETED = intPreferencesKey("games_completed")
@@ -49,7 +50,8 @@ class SettingsRepository(private val context: Context) {
             themeMode = ThemeMode.valueOf(
                 preferences[PreferencesKeys.THEME_MODE] ?: ThemeMode.SYSTEM.name
             ),
-            dynamicColor = preferences[PreferencesKeys.DYNAMIC_COLOR] ?: false
+            dynamicColor = preferences[PreferencesKeys.DYNAMIC_COLOR] ?: false,
+            soundHapticsEnabled = preferences[PreferencesKeys.SOUND_HAPTICS_ENABLED] ?: true
         )
     }
 
@@ -62,6 +64,7 @@ class SettingsRepository(private val context: Context) {
             preferences[PreferencesKeys.TIE_VOTE_BEHAVIOR] = settings.tieVoteBehavior.name
             preferences[PreferencesKeys.THEME_MODE] = settings.themeMode.name
             preferences[PreferencesKeys.DYNAMIC_COLOR] = settings.dynamicColor
+            preferences[PreferencesKeys.SOUND_HAPTICS_ENABLED] = settings.soundHapticsEnabled
         }
     }
 

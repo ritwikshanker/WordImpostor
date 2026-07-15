@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.data.model.Role
+import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 import kotlinx.coroutines.delay
 
 @Composable
@@ -26,6 +28,7 @@ fun RoleRevealScreen(
     var showReadyButton by remember { mutableStateOf(false) }
     var showRole by remember { mutableStateOf(false) }
     var showPassMessage by remember { mutableStateOf(false) }
+    val feedback = LocalGameFeedback.current
 
     LaunchedEffect(currentPlayer.id) {
         // Reset states for new player
@@ -84,14 +87,14 @@ fun RoleRevealScreen(
                         visible = showReadyButton,
                         enter = fadeIn(animationSpec = tween(500))
                     ) {
-                        Button(
-                            onClick = { showRole = true },
-                            modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .height(56.dp)
-                        ) {
-                            Text("Tap to Reveal Role", style = MaterialTheme.typography.titleMedium)
-                        }
+                        PrimaryButton(
+                            text = "Tap to Reveal Role",
+                            onClick = {
+                                feedback.heavy()
+                                showRole = true
+                            },
+                            modifier = Modifier.fillMaxWidth(0.8f)
+                        )
                     }
                 } else {
                     AnimatedVisibility(
@@ -184,16 +187,11 @@ fun RoleRevealScreen(
 
                             Spacer(modifier = Modifier.height(24.dp))
 
-                            Button(
-                                onClick = {
-                                    showPassMessage = true
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth(0.8f)
-                                    .height(56.dp)
-                            ) {
-                                Text("Continue", style = MaterialTheme.typography.titleMedium)
-                            }
+                            PrimaryButton(
+                                text = "Continue",
+                                onClick = { showPassMessage = true },
+                                modifier = Modifier.fillMaxWidth(0.8f)
+                            )
                         }
                     }
                 }
@@ -226,14 +224,11 @@ fun RoleRevealScreen(
 
                         Spacer(modifier = Modifier.height(32.dp))
 
-                        Button(
+                        PrimaryButton(
+                            text = "Next Player",
                             onClick = onContinue,
-                            modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .height(56.dp)
-                        ) {
-                            Text("Next Player", style = MaterialTheme.typography.titleMedium)
-                        }
+                            modifier = Modifier.fillMaxWidth(0.8f)
+                        )
                     }
                 }
             }

@@ -12,22 +12,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Player
-import com.deutschdreamers.wordimpostor.data.model.Role
+import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
+import com.deutschdreamers.wordimpostor.ui.components.CircularTimer
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
 @Composable
 fun ClueRoundScreen(
     currentPlayer: Player,
     secretWord: String,
     remainingTime: Int?,
+    totalTime: Int,
     onSubmitClue: (String) -> Unit
 ) {
     var clueText by remember(currentPlayer.id) { mutableStateOf("") }
     var showWord by remember(currentPlayer.id) { mutableStateOf(false) }
+    val feedback = LocalGameFeedback.current
 
     LaunchedEffect(currentPlayer.id) {
         showWord = false
         kotlinx.coroutines.delay(300)
         showWord = true
+    }
+
+    // Subtle tick as the clock runs out.
+    LaunchedEffect(remainingTime) {
+        if (remainingTime != null && remainingTime in 1..5) {
+            feedback.tick()
+        }
     }
 
     Surface(
@@ -45,27 +56,10 @@ fun ClueRoundScreen(
 
             // Timer
             if (remainingTime != null) {
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = when {
-                            remainingTime <= 5 -> MaterialTheme.colorScheme.errorContainer
-                            remainingTime <= 10 -> MaterialTheme.colorScheme.tertiaryContainer
-                            else -> MaterialTheme.colorScheme.primaryContainer
-                        }
-                    )
-                ) {
-                    Text(
-                        text = "$remainingTime",
-                        style = MaterialTheme.typography.displayLarge,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(24.dp),
-                        color = when {
-                            remainingTime <= 5 -> MaterialTheme.colorScheme.error
-                            remainingTime <= 10 -> MaterialTheme.colorScheme.tertiary
-                            else -> MaterialTheme.colorScheme.primary
-                        }
-                    )
-                }
+                CircularTimer(
+                    remainingSeconds = remainingTime,
+                    totalSeconds = totalTime
+                )
 
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -127,20 +121,19 @@ fun ClueRoundScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Button(
+            PrimaryButton(
+                text = "Submit Clue",
                 onClick = { onSubmitClue(clueText.trim()) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
                 enabled = clueText.isNotBlank()
-            ) {
-                Text("Submit Clue", style = MaterialTheme.typography.titleMedium)
-            }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             TextButton(
-                onClick = { onSubmitClue("") },
+                onClick = {
+                    feedback.click()
+                    onSubmitClue("")
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Skip (No Clue)")

@@ -13,6 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.*
+import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
+import com.deutschdreamers.wordimpostor.ui.components.SecondaryButton
 import kotlinx.coroutines.delay
 
 @Composable
@@ -27,10 +30,13 @@ fun GameEndScreen(
 ) {
     var showWinner by remember { mutableStateOf(false) }
     var showDetails by remember { mutableStateOf(false) }
+    val feedback = LocalGameFeedback.current
 
     LaunchedEffect(Unit) {
         delay(300)
         showWinner = true
+        // Celebrate (or commiserate) the reveal with a matching buzz.
+        if (winner == Winner.IMPOSTORS) feedback.reject() else feedback.success()
         delay(1000)
         showDetails = true
     }
@@ -255,25 +261,11 @@ fun GameEndScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     // Action Buttons
-                    Button(
-                        onClick = onPlayAgain,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp)
-                    ) {
-                        Text("Play Again", style = MaterialTheme.typography.titleMedium)
-                    }
+                    PrimaryButton(text = "Play Again", onClick = onPlayAgain)
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    OutlinedButton(
-                        onClick = onMainMenu,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp)
-                    ) {
-                        Text("Main Menu", style = MaterialTheme.typography.titleMedium)
-                    }
+                    SecondaryButton(text = "Main Menu", onClick = onMainMenu)
 
                     Spacer(modifier = Modifier.height(32.dp))
                 }

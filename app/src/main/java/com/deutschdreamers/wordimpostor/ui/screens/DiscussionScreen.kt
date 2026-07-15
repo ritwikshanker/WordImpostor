@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Player
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 import kotlinx.coroutines.delay
 
 @Composable
@@ -211,14 +212,7 @@ fun DiscussionScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = onStartVoting,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Proceed to Voting", style = MaterialTheme.typography.titleMedium)
-            }
+            PrimaryButton(text = "Proceed to Voting", onClick = onStartVoting)
         }
     }
 }

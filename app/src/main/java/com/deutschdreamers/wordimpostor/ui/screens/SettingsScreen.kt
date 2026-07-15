@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.GameSettings
 import com.deutschdreamers.wordimpostor.data.model.ThemeMode
 import com.deutschdreamers.wordimpostor.data.model.TieVoteBehavior
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +30,7 @@ fun SettingsScreen(
     var tieVoteBehavior by remember { mutableStateOf(settings.tieVoteBehavior) }
     var themeMode by remember { mutableStateOf(settings.themeMode) }
     var useDynamicColor by remember { mutableStateOf(settings.dynamicColor) }
+    var soundHapticsEnabled by remember { mutableStateOf(settings.soundHapticsEnabled) }
     val dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
     Scaffold(
@@ -174,6 +176,40 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Sound & Haptics
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Sound & Haptics",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = "Vibration and tap sounds during play",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = soundHapticsEnabled,
+                            onCheckedChange = { soundHapticsEnabled = it }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Voting Settings
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -236,7 +272,8 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
+            PrimaryButton(
+                text = "Save Settings",
                 onClick = {
                     onUpdateSettings(
                         GameSettings(
@@ -246,17 +283,13 @@ fun SettingsScreen(
                             allowSelfVoting = allowSelfVoting,
                             tieVoteBehavior = tieVoteBehavior,
                             themeMode = themeMode,
-                            dynamicColor = useDynamicColor
+                            dynamicColor = useDynamicColor,
+                            soundHapticsEnabled = soundHapticsEnabled
                         )
                     )
                     onBack()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Save Settings", style = MaterialTheme.typography.titleMedium)
-            }
+                }
+            )
         }
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Player
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
 @Composable
 fun VotingScreen(
@@ -162,7 +163,8 @@ fun VotingScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
+                PrimaryButton(
+                    text = "Cast Vote",
                     onClick = {
                         if (selectedVoterId != null && selectedVotedForId != null) {
                             onCastVote(selectedVoterId!!, selectedVotedForId!!)
@@ -170,28 +172,19 @@ fun VotingScreen(
                             selectedVotedForId = null
                         }
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
                     enabled = selectedVotedForId != null
-                ) {
-                    Text("Cast Vote", style = MaterialTheme.typography.titleMedium)
-                }
+                )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
+            PrimaryButton(
+                text = "Finalize Voting",
                 onClick = onFinalizeVoting,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiary
                 )
-            ) {
-                Text("Finalize Voting", style = MaterialTheme.typography.titleMedium)
-            }
+            )
         }
     }
 }

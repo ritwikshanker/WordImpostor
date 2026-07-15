@@ -12,6 +12,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.data.model.Role
+import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 import kotlinx.coroutines.delay
 
 @Composable
@@ -22,12 +24,15 @@ fun EliminationRevealScreen(
     var showName by remember { mutableStateOf(false) }
     var showRole by remember { mutableStateOf(false) }
     var showButton by remember { mutableStateOf(false) }
+    val feedback = LocalGameFeedback.current
 
     LaunchedEffect(Unit) {
         delay(300)
         showName = true
         delay(1000)
         showRole = true
+        // A dramatic buzz as the eliminated player's role is unmasked.
+        feedback.heavy()
         delay(1000)
         showButton = true
     }
@@ -111,14 +116,7 @@ fun EliminationRevealScreen(
                 visible = showButton,
                 enter = fadeIn(animationSpec = tween(500))
             ) {
-                Button(
-                    onClick = onContinue,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
-                ) {
-                    Text("Continue", style = MaterialTheme.typography.titleMedium)
-                }
+                PrimaryButton(text = "Continue", onClick = onContinue)
             }
         }
     }

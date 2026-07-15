@@ -1,5 +1,26 @@
 # Changelog
 
+## Version 3.3.0 (2026-07-15)
+
+### ✨ Feel & Polish
+
+- **Smooth screen transitions**: screens now slide and fade as you move through the game, instead of
+  snapping between phases.
+- **Sound & haptics**: subtle vibration and tap sounds add feedback to button presses, role reveals,
+  eliminations, and the win screen. Toggle it all under **Settings → Sound & Haptics** (it also
+  respects your phone's system touch-sound and vibration settings).
+- **New circular countdown timer**: the clue-round timer is now a clean animated ring that fills
+  down
+  and shifts colour as the seconds run out, with a gentle tick in the final five seconds.
+- **More consistent buttons** across every screen for a tidier, more polished look.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.3.0 (version code 7).
+- Introduced a shared UI component kit (buttons, circular timer) and a central sound/haptics helper.
+
+---
+
 ## Version 3.2.0 (2026-07-12)
 
 ### 🎨 Brand Redesign

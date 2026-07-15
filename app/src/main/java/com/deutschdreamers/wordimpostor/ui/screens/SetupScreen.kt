@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
+import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -188,19 +189,15 @@ fun SetupScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
+            PrimaryButton(
+                text = "Start Game",
                 onClick = {
                     val names = playerNames.mapIndexed { index, name ->
                         name.ifEmpty { "Player ${index + 1}" }
                     }
                     onStartGame(names, impostorCount)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Start Game", style = MaterialTheme.typography.titleMedium)
-            }
+                }
+            )
         }
     }
 }

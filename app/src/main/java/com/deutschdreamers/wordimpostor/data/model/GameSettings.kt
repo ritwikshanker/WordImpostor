@@ -8,7 +8,9 @@ data class GameSettings(
     val tieVoteBehavior: TieVoteBehavior = TieVoteBehavior.NO_ELIMINATION,
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     // Material You dynamic color is opt-in; the brand palette is the default look.
-    val dynamicColor: Boolean = false
+    val dynamicColor: Boolean = false,
+    // Tactile + audible feedback (honours device-level touch sound/vibration too).
+    val soundHapticsEnabled: Boolean = true
 )
 
 enum class TieVoteBehavior {

@@ -5,6 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -22,6 +27,8 @@ import androidx.navigation.compose.rememberNavController
 import com.deutschdreamers.wordimpostor.data.model.*
 import com.deutschdreamers.wordimpostor.data.repository.SettingsRepository
 import com.deutschdreamers.wordimpostor.data.repository.WordRepository
+import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
+import com.deutschdreamers.wordimpostor.feedback.rememberGameFeedback
 import com.deutschdreamers.wordimpostor.review.ReviewController
 import com.deutschdreamers.wordimpostor.ui.navigation.Screen
 import com.deutschdreamers.wordimpostor.ui.screens.*
@@ -75,11 +82,14 @@ fun WordImpostorApp() {
         // regions show the app's background color (following the in-app dark/light
         // setting) instead of the white window background. The content inside is
         // inset away from the bars via safeDrawingPadding().
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            WordImpostorAppContent(settingsRepository, wordRepository, navController)
+        val feedback = rememberGameFeedback(settings.soundHapticsEnabled)
+        CompositionLocalProvider(LocalGameFeedback provides feedback) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                WordImpostorAppContent(settingsRepository, wordRepository, navController)
+            }
         }
     }
 }
@@ -108,7 +118,19 @@ fun WordImpostorAppContent(
         startDestination = Screen.Home,
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
+            .safeDrawingPadding(),
+        enterTransition = {
+            slideInHorizontally(animationSpec = tween(300)) { it / 4 } + fadeIn(tween(300))
+        },
+        exitTransition = {
+            slideOutHorizontally(animationSpec = tween(300)) { -it / 6 } + fadeOut(tween(300))
+        },
+        popEnterTransition = {
+            slideInHorizontally(animationSpec = tween(300)) { -it / 6 } + fadeIn(tween(300))
+        },
+        popExitTransition = {
+            slideOutHorizontally(animationSpec = tween(300)) { it / 4 } + fadeOut(tween(300))
+        }
     ) {
         composable<Screen.Home> {
             HomeScreen(
@@ -175,6 +197,7 @@ fun WordImpostorAppContent(
                         currentPlayer = currentPlayer,
                         secretWord = gameState.secretWord,
                         remainingTime = currentPhase.remainingTime,
+                        totalTime = gameState.settings.timerDuration,
                         onSubmitClue = { clue ->
                             gameViewModel.submitClue(clue)
                         }
