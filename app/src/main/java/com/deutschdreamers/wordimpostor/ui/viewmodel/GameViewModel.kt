@@ -31,7 +31,18 @@ class GameViewModel(
         }
     }
 
-    fun startGame(playerNames: List<String>, impostorCount: Int) {
+    fun startGame(
+        playerNames: List<String>,
+        impostorCount: Int,
+        difficulty: Difficulty,
+        category: WordCategory
+    ) {
+        // Persist the per-game choices so Setup remembers them next time.
+        viewModelScope.launch {
+            settingsRepository.updateDifficulty(difficulty)
+            settingsRepository.updateWordCategory(category)
+        }
+
         // Create players
         val players = playerNames.mapIndexed { index, name ->
             Player(id = index, name = name, role = Role.CIVILIAN)
@@ -43,8 +54,13 @@ class GameViewModel(
             players[index] = players[index].copy(role = Role.IMPOSTOR)
         }
 
-        // Select secret word
-        val secretWord = wordRepository.getRandomWord(_gameState.value.settings.difficulty)
+        // Select secret word from the chosen category/difficulty
+        val secretWord = wordRepository.getRandomWord(difficulty, category)
+
+        // Optional impostor hint (category or difficulty band)
+        val impostorHint = if (_gameState.value.settings.impostorHintEnabled) {
+            wordRepository.impostorHint(difficulty, category)
+        } else null
 
         // Determine starting player (must be civilian)
         val civilianIndices = players.indices.filter { players[it].role == Role.CIVILIAN }
@@ -56,7 +72,8 @@ class GameViewModel(
             currentPhase = GamePhase.RoleReveal(0),
             settings = _gameState.value.settings,
             startingPlayerId = startingPlayerId,
-            roundHistory = emptyList()
+            roundHistory = emptyList(),
+            impostorHint = impostorHint
         )
     }
 

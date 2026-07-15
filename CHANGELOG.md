@@ -1,5 +1,27 @@
 # Changelog
 
+## Version 3.4.0 (2026-07-15)
+
+### 🎯 New Ways to Play
+
+- **Word categories**: pick a themed word pack in Game Setup — 🐾 Animals, 🍕 Food & Drink,
+  🏛️ Places, ⚽ Sports, 🔬 Science & Nature — or stick with the classic 🎲 Mixed pack.
+- **Impostor Hint mode**: turn it on in Settings to give impostors a subtle clue (the category, or
+  the difficulty band) — a gentler, more balanced game for mixed groups.
+
+### 🐛 Bug Fixes
+
+- **Fixed the difficulty picker**: the difficulty you choose in Game Setup is now actually applied
+  to
+  the round (previously it was ignored). Your last-used difficulty and category are also remembered.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.4.0 (version code 8).
+- Added themed word packs and per-game category/difficulty selection, wired end to end.
+
+---
+
 ## Version 3.3.0 (2026-07-15)
 
 ### ✨ Feel & Polish

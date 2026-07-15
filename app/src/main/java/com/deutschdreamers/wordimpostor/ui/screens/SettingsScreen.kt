@@ -31,6 +31,7 @@ fun SettingsScreen(
     var themeMode by remember { mutableStateOf(settings.themeMode) }
     var useDynamicColor by remember { mutableStateOf(settings.dynamicColor) }
     var soundHapticsEnabled by remember { mutableStateOf(settings.soundHapticsEnabled) }
+    var impostorHintEnabled by remember { mutableStateOf(settings.impostorHintEnabled) }
     val dynamicColorSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
     Scaffold(
@@ -210,6 +211,44 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Gameplay
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "Gameplay",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Impostor Hint")
+                            Text(
+                                text = "Give impostors a subtle clue (the category or difficulty)",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = impostorHintEnabled,
+                            onCheckedChange = { impostorHintEnabled = it }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Voting Settings
             Card(
                 modifier = Modifier.fillMaxWidth()
@@ -280,6 +319,8 @@ fun SettingsScreen(
                             timerEnabled = timerEnabled,
                             timerDuration = timerDuration,
                             difficulty = settings.difficulty,
+                            wordCategory = settings.wordCategory,
+                            impostorHintEnabled = impostorHintEnabled,
                             allowSelfVoting = allowSelfVoting,
                             tieVoteBehavior = tieVoteBehavior,
                             themeMode = themeMode,

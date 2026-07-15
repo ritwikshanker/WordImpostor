@@ -19,19 +19,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
+import com.deutschdreamers.wordimpostor.data.model.WordCategory
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun SetupScreen(
     difficulty: Difficulty,
+    category: WordCategory,
     onBack: () -> Unit,
-    onStartGame: (List<String>, Int) -> Unit
+    onStartGame: (List<String>, Int, Difficulty, WordCategory) -> Unit
 ) {
     var playerCount by remember { mutableIntStateOf(4) }
     var impostorCount by remember { mutableIntStateOf(1) }
     var playerNames by remember { mutableStateOf(List(playerCount) { "" }) }
     var selectedDifficulty by remember { mutableStateOf(difficulty) }
+    var selectedCategory by remember { mutableStateOf(category) }
     val focusManager = LocalFocusManager.current
 
     // Update player names list when player count changes
@@ -132,12 +135,47 @@ fun SetupScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Difficulty
+            // Word Category
             Text(
-                text = "Difficulty",
+                text = "Word Category",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                WordCategory.entries.forEach { cat ->
+                    FilterChip(
+                        selected = selectedCategory == cat,
+                        onClick = { selectedCategory = cat },
+                        label = { Text("${cat.emoji} ${cat.displayName}") }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Difficulty (only affects the Mixed pack)
+            val difficultyEnabled = selectedCategory == WordCategory.MIXED
+            Text(
+                text = "Difficulty",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = if (difficultyEnabled) {
+                    MaterialTheme.colorScheme.onSurface
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                }
+            )
+            if (!difficultyEnabled) {
+                Text(
+                    text = "Difficulty applies to the Mixed pack only",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -145,8 +183,9 @@ fun SetupScreen(
             ) {
                 Difficulty.entries.forEach { diff ->
                     FilterChip(
-                        selected = selectedDifficulty == diff,
+                        selected = difficultyEnabled && selectedDifficulty == diff,
                         onClick = { selectedDifficulty = diff },
+                        enabled = difficultyEnabled,
                         label = { Text(diff.name) },
                         modifier = Modifier.weight(1f)
                     )
@@ -195,7 +234,7 @@ fun SetupScreen(
                     val names = playerNames.mapIndexed { index, name ->
                         name.ifEmpty { "Player ${index + 1}" }
                     }
-                    onStartGame(names, impostorCount)
+                    onStartGame(names, impostorCount, selectedDifficulty, selectedCategory)
                 }
             )
         }

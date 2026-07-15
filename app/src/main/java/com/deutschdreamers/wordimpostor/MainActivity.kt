@@ -143,9 +143,10 @@ fun WordImpostorAppContent(
         composable<Screen.Setup> {
             SetupScreen(
                 difficulty = gameState.settings.difficulty,
+                category = gameState.settings.wordCategory,
                 onBack = { navController.popBackStack() },
-                onStartGame = { playerNames, impostorCount ->
-                    gameViewModel.startGame(playerNames, impostorCount)
+                onStartGame = { playerNames, impostorCount, difficulty, category ->
+                    gameViewModel.startGame(playerNames, impostorCount, difficulty, category)
                     navController.navigate(Screen.RoleReveal) {
                         popUpTo(Screen.Home)
                     }
@@ -173,6 +174,7 @@ fun WordImpostorAppContent(
                     RoleRevealScreen(
                         currentPlayer = currentPlayer,
                         secretWord = gameState.secretWord,
+                        impostorHint = gameState.impostorHint,
                         onContinue = {
                             gameViewModel.revealNextRole()
                         }

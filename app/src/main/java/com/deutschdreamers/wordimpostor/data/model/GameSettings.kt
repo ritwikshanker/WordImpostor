@@ -4,6 +4,9 @@ data class GameSettings(
     val timerEnabled: Boolean = false,
     val timerDuration: Int = 30, // seconds
     val difficulty: Difficulty = Difficulty.MEDIUM,
+    val wordCategory: WordCategory = WordCategory.MIXED,
+    // When on, impostors get a subtle hint (the category, or the difficulty band).
+    val impostorHintEnabled: Boolean = false,
     val allowSelfVoting: Boolean = false,
     val tieVoteBehavior: TieVoteBehavior = TieVoteBehavior.NO_ELIMINATION,
     val themeMode: ThemeMode = ThemeMode.SYSTEM,

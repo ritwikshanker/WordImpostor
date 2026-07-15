@@ -13,6 +13,7 @@ import com.deutschdreamers.wordimpostor.data.model.Difficulty
 import com.deutschdreamers.wordimpostor.data.model.GameSettings
 import com.deutschdreamers.wordimpostor.data.model.ThemeMode
 import com.deutschdreamers.wordimpostor.data.model.TieVoteBehavior
+import com.deutschdreamers.wordimpostor.data.model.WordCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -25,6 +26,8 @@ class SettingsRepository(private val context: Context) {
         val TIMER_ENABLED = booleanPreferencesKey("timer_enabled")
         val TIMER_DURATION = intPreferencesKey("timer_duration")
         val DIFFICULTY = stringPreferencesKey("difficulty")
+        val WORD_CATEGORY = stringPreferencesKey("word_category")
+        val IMPOSTOR_HINT_ENABLED = booleanPreferencesKey("impostor_hint_enabled")
         val ALLOW_SELF_VOTING = booleanPreferencesKey("allow_self_voting")
         val TIE_VOTE_BEHAVIOR = stringPreferencesKey("tie_vote_behavior")
         val THEME_MODE = stringPreferencesKey("theme_mode")
@@ -43,6 +46,10 @@ class SettingsRepository(private val context: Context) {
             difficulty = Difficulty.valueOf(
                 preferences[PreferencesKeys.DIFFICULTY] ?: Difficulty.MEDIUM.name
             ),
+            wordCategory = WordCategory.valueOf(
+                preferences[PreferencesKeys.WORD_CATEGORY] ?: WordCategory.MIXED.name
+            ),
+            impostorHintEnabled = preferences[PreferencesKeys.IMPOSTOR_HINT_ENABLED] ?: false,
             allowSelfVoting = preferences[PreferencesKeys.ALLOW_SELF_VOTING] ?: false,
             tieVoteBehavior = TieVoteBehavior.valueOf(
                 preferences[PreferencesKeys.TIE_VOTE_BEHAVIOR] ?: TieVoteBehavior.NO_ELIMINATION.name
@@ -60,6 +67,8 @@ class SettingsRepository(private val context: Context) {
             preferences[PreferencesKeys.TIMER_ENABLED] = settings.timerEnabled
             preferences[PreferencesKeys.TIMER_DURATION] = settings.timerDuration
             preferences[PreferencesKeys.DIFFICULTY] = settings.difficulty.name
+            preferences[PreferencesKeys.WORD_CATEGORY] = settings.wordCategory.name
+            preferences[PreferencesKeys.IMPOSTOR_HINT_ENABLED] = settings.impostorHintEnabled
             preferences[PreferencesKeys.ALLOW_SELF_VOTING] = settings.allowSelfVoting
             preferences[PreferencesKeys.TIE_VOTE_BEHAVIOR] = settings.tieVoteBehavior.name
             preferences[PreferencesKeys.THEME_MODE] = settings.themeMode.name
@@ -83,6 +92,12 @@ class SettingsRepository(private val context: Context) {
     suspend fun updateDifficulty(difficulty: Difficulty) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.DIFFICULTY] = difficulty.name
+        }
+    }
+
+    suspend fun updateWordCategory(category: WordCategory) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.WORD_CATEGORY] = category.name
         }
     }
 

@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 fun RoleRevealScreen(
     currentPlayer: Player,
     secretWord: String,
+    impostorHint: String? = null,
     onContinue: () -> Unit
 ) {
     var showName by remember { mutableStateOf(false) }
@@ -181,6 +182,38 @@ fun RoleRevealScreen(
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier.fillMaxWidth()
                                         )
+
+                                        if (impostorHint != null) {
+                                            Spacer(modifier = Modifier.height(16.dp))
+
+                                            Surface(
+                                                color = MaterialTheme.colorScheme.surface,
+                                                shape = MaterialTheme.shapes.medium,
+                                                modifier = Modifier.fillMaxWidth()
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(16.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(
+                                                        text = "🔍 Hint",
+                                                        style = MaterialTheme.typography.labelLarge,
+                                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                    )
+                                                    Spacer(modifier = Modifier.height(4.dp))
+                                                    Text(
+                                                        text = impostorHint,
+                                                        style = MaterialTheme.typography.titleMedium,
+                                                        fontWeight = FontWeight.Bold,
+                                                        color = MaterialTheme.colorScheme.error,
+                                                        textAlign = TextAlign.Center,
+                                                        modifier = Modifier.fillMaxWidth()
+                                                    )
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

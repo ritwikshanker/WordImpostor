@@ -1,6 +1,7 @@
 package com.deutschdreamers.wordimpostor.data.repository
 
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
+import com.deutschdreamers.wordimpostor.data.model.WordCategory
 import kotlin.random.Random
 
 class WordRepository {
@@ -87,13 +88,86 @@ class WordRepository {
         "Symbiosis", "Evolution", "Revolution", "Innovation", "Transformation"
     )
 
-    fun getRandomWord(difficulty: Difficulty): String {
-        val wordList = when (difficulty) {
-            Difficulty.EASY -> easyWords
-            Difficulty.MEDIUM -> mediumWords
-            Difficulty.HARD -> hardWords
+    // ── Themed word packs (used when a specific category is chosen; difficulty ignored) ──
+
+    private val animalWords = listOf(
+        "Dog", "Cat", "Horse", "Lion", "Tiger", "Bear", "Monkey", "Elephant",
+        "Rabbit", "Mouse", "Duck", "Chicken", "Cow", "Pig", "Sheep", "Frog",
+        "Snake", "Turtle", "Butterfly", "Bird", "Fish", "Shark", "Whale", "Dolphin",
+        "Penguin", "Owl", "Eagle", "Wolf", "Fox", "Deer", "Giraffe", "Zebra",
+        "Kangaroo", "Koala", "Panda", "Camel", "Crocodile", "Octopus", "Spider", "Bee"
+    )
+
+    private val foodWords = listOf(
+        "Pizza", "Bread", "Cheese", "Apple", "Banana", "Orange", "Grape", "Lemon",
+        "Mango", "Peach", "Cherry", "Carrot", "Potato", "Tomato", "Onion", "Corn",
+        "Soup", "Salad", "Sandwich", "Cookie", "Candy", "Honey", "Coffee", "Tea",
+        "Milk", "Rice", "Egg", "Butter", "Chocolate", "Pancake", "Burger", "Pasta",
+        "Noodle", "Sushi", "Taco", "Popcorn", "Icecream", "Waffle", "Donut", "Yogurt"
+    )
+
+    private val placeWords = listOf(
+        "Hospital", "School", "Library", "Museum", "Theater", "Stadium", "Airport",
+        "Station", "Market", "Restaurant", "Hotel", "Park", "Bridge", "Tower",
+        "Castle", "Temple", "Church", "Beach", "Mountain", "Forest", "Desert",
+        "Island", "Village", "City", "Farm", "Zoo", "Bakery", "Factory", "Harbor",
+        "Lighthouse", "Cave", "Volcano", "Waterfall", "Canyon", "Palace", "Garden"
+    )
+
+    private val sportWords = listOf(
+        "Soccer", "Basketball", "Tennis", "Baseball", "Cricket", "Hockey", "Golf",
+        "Swimming", "Running", "Cycling", "Boxing", "Wrestling", "Archery", "Skating",
+        "Skiing", "Surfing", "Bowling", "Rugby", "Volleyball", "Badminton", "Rowing",
+        "Diving", "Fencing", "Judo", "Karate", "Marathon", "Sprint", "Gymnastics",
+        "Climbing", "Sailing", "Snowboarding", "Skateboarding", "Handball", "Polo"
+    )
+
+    private val scienceWords = listOf(
+        "Gravity", "Atom", "Molecule", "Electron", "Planet", "Galaxy", "Comet",
+        "Volcano", "Earthquake", "Magnet", "Electricity", "Energy", "Oxygen",
+        "Hydrogen", "Cell", "Bacteria", "Virus", "Gene", "Fossil", "Mineral",
+        "Crystal", "Rainbow", "Lightning", "Tornado", "Glacier", "Ecosystem",
+        "Evolution", "Photosynthesis", "Orbit", "Telescope", "Microscope",
+        "Experiment", "Chemical", "Nucleus", "Pressure", "Velocity"
+    )
+
+    /**
+     * Returns a random secret word. For [WordCategory.MIXED] the [difficulty] selects the pool;
+     * for a themed category the difficulty is ignored and the category's own pack is used.
+     */
+    fun getRandomWord(
+        difficulty: Difficulty,
+        category: WordCategory = WordCategory.MIXED
+    ): String {
+        val wordList = when (category) {
+            WordCategory.MIXED -> when (difficulty) {
+                Difficulty.EASY -> easyWords
+                Difficulty.MEDIUM -> mediumWords
+                Difficulty.HARD -> hardWords
+            }
+
+            WordCategory.ANIMALS -> animalWords
+            WordCategory.FOOD -> foodWords
+            WordCategory.PLACES -> placeWords
+            WordCategory.SPORTS -> sportWords
+            WordCategory.SCIENCE -> scienceWords
         }
         return wordList[Random.nextInt(wordList.size)]
     }
 
+    /**
+     * The hint shown to impostors when hint mode is on: the category for a themed pack,
+     * or the difficulty band for a mixed game.
+     */
+    fun impostorHint(difficulty: Difficulty, category: WordCategory): String =
+        if (category == WordCategory.MIXED) {
+            val band = when (difficulty) {
+                Difficulty.EASY -> "an easy, everyday"
+                Difficulty.MEDIUM -> "a medium"
+                Difficulty.HARD -> "a hard, abstract"
+            }
+            "It's $band word"
+        } else {
+            "Category: ${category.emoji} ${category.displayName}"
+        }
 }
