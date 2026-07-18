@@ -13,15 +13,39 @@ Players give one-word clues, discuss, and vote to eliminate suspects.
 
 ## Features
 
+**Gameplay**
 - 3-12 players, 1-3 impostors
-- Three difficulty levels (Easy/Medium/Hard word pools)
-- Optional timer per clue (15-120 seconds)
+- Three difficulty levels (Easy/Medium/Hard) **and** themed word categories (Animals, Food & Drink,
+  Places, Sports, Science & Nature)
+- Optional **Impostor Hint** mode — give impostors a subtle clue (category or difficulty band)
+- Optional timer per clue (15-120 seconds) with an animated circular countdown
 - Configurable voting rules (tie-breakers, self-voting)
 - Pass-the-phone role reveals with animations
-- Material 3 Design with dark mode
+
+**Replay & retention**
+
+- Local **stats** (games played, civilian vs. impostor wins, win rate) stored on-device
+- **Last-game recap** (winner, secret word, category, roles)
+- **Quick Rematch** — replay with the same players and options in one tap
+
+**Look & feel**
+
+- Custom brand palette in light and dark, with optional Material You (dynamic color) on Android 12+
+- Sound & haptics feedback (toggleable; respects device settings)
+- Smooth slide/fade screen transitions
+
+**Reach & polish**
+
+- Full **English + German** localization, with per-app language on Android 13+
+- Tablet / large-screen friendly layout
+- Accessibility labels for steppers and the timer
+- Google Play in-app review prompt
+
+**Under the hood**
 - MVVM architecture with StateFlow
 - Settings persistence with DataStore
 - State survives rotation and process death (SavedStateHandle)
+- Completely offline, ad-free, and open source
 
 ## Project Structure
 
@@ -29,31 +53,39 @@ Players give one-word clues, discuss, and vote to eliminate suspects.
 app/src/main/java/com/deutschdreamers/wordimpostor/
 ├── MainActivity.kt
 ├── data/
-│   ├── model/              # Game models (Player, GameState, GamePhase, etc.)
-│   └── repository/         # WordRepository, SettingsRepository
+│   ├── model/              # Game models (Player, GameState, GamePhase, WordCategory, GameStats, etc.)
+│   └── repository/         # WordRepository, SettingsRepository, StatsRepository
+├── feedback/              # GameFeedback (sound & haptics)
+├── review/                # In-app review gate + controller
 ├── ui/
+│   ├── components/         # Shared UI kit (buttons, circular timer)
 │   ├── navigation/         # Type-safe navigation
-│   ├── screens/            # All game screens (9 screens)
-│   ├── theme/              # Material 3 theming
+│   ├── screens/            # All game screens (11 screens)
+│   ├── theme/              # Brand palette + Material 3 theming
 │   └── viewmodel/          # GameViewModel (state machine)
 ```
 
+Strings live in `app/src/main/res/values/strings.xml` (English) and
+`app/src/main/res/values-de/strings.xml` (German).
+
 ## Tech Stack
 
-- Kotlin 2.0.21
+- Kotlin 2.2.10
 - Jetpack Compose (Material 3)
-- Navigation Compose
-- Lifecycle ViewModel
+- Navigation Compose (type-safe routes)
+- Lifecycle ViewModel + SavedStateHandle
 - DataStore Preferences
 - Kotlinx Serialization
+- Google Play In-App Review
 
 ## Building
 
 **Requirements:**
-- Android Studio Koala or later
+
+- Android Studio Ladybug or later
 - JDK 11+
 - Min SDK: 26 (Android 8.0)
-- Target SDK: 35
+- Target SDK: 36
 
 **Steps:**
 1. Open project in Android Studio
@@ -90,7 +122,7 @@ Role Reveal (pass-the-phone for each player)
     ↓ If game ends
 Game End (show winner, roles, history)
     ↓
-Play Again or Main Menu
+Rematch (same players), New Game, or Main Menu
 ```
 
 ## Game Rules
@@ -98,7 +130,7 @@ Play Again or Main Menu
 ### Setup
 1. Choose 3-12 players
 2. Select 1-3 impostors
-3. Pick difficulty (affects word complexity)
+3. Pick a word category, or use the Mixed pack with a difficulty (Easy/Medium/Hard)
 4. Enter player names
 
 ### Role Assignment
@@ -130,14 +162,26 @@ Play Again or Main Menu
 
 ## Word Pools
 
-### Easy (40 words)
+The **Mixed** pack is difficulty-based:
+
+### Easy
 Common objects: Apple, Dog, Cat, Tree, House, Car, etc.
 
-### Medium (44 words)
+### Medium
 Occupations, tools, household items: Doctor, Teacher, Hammer, Microscope, etc.
 
-### Hard (44 words)
+### Hard
 Abstract concepts: Democracy, Justice, Paradox, Entropy, Serendipity, etc.
+
+### Themed categories
+
+Each themed pack draws from its own curated list (difficulty doesn't apply):
+
+- 🐾 **Animals** — Dog, Lion, Penguin, Octopus, …
+- 🍕 **Food & Drink** — Pizza, Mango, Sushi, Waffle, …
+- 🏛️ **Places** — Hospital, Castle, Volcano, Lighthouse, …
+- ⚽ **Sports** — Soccer, Tennis, Archery, Snowboarding, …
+- 🔬 **Science & Nature** — Gravity, Molecule, Glacier, Photosynthesis, …
 
 ## State Management
 
@@ -159,11 +203,22 @@ State is exposed via `StateFlow` and survives:
 User settings are saved using Jetpack DataStore:
 - Timer enabled/disabled
 - Timer duration (15-120 seconds)
-- Difficulty level
+- Difficulty level and word category
+- Impostor Hint mode
+- Theme mode and Material You (dynamic color) toggle
+- Sound & haptics
 - Allow self-voting
 - Tie vote behavior
 
-Settings persist across app launches.
+Settings persist across app launches. Local play stats and the last-game recap are stored in a
+separate DataStore.
+
+## Localization
+
+Fully translated into **English** and **German**. All user-facing text is externalized to string
+resources (`values/` and `values-de/`), so the app follows the device language automatically. On
+Android 13+, the app's language can also be set independently via System Settings (backed by
+`res/xml/locales_config.xml`). Additional languages only need a new `values-<lang>/strings.xml`.
 
 ## Animations
 
