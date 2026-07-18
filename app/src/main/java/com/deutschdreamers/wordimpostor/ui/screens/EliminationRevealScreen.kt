@@ -86,7 +86,7 @@ fun EliminationRevealScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "They were a",
+                            text = "They were ",
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center
                         )
@@ -95,9 +95,9 @@ fun EliminationRevealScreen(
 
                         Text(
                             text = if (eliminatedPlayer.role == Role.IMPOSTOR)
-                                "IMPOSTOR"
+                                "an IMPOSTOR"
                             else
-                                "CIVILIAN",
+                                "a CIVILIAN",
                             style = MaterialTheme.typography.displayMedium,
                             fontWeight = FontWeight.Bold,
                             color = if (eliminatedPlayer.role == Role.IMPOSTOR)
