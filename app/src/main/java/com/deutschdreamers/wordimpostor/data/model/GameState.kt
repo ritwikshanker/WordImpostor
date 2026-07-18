@@ -1,5 +1,8 @@
 package com.deutschdreamers.wordimpostor.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GameState(
     val players: List<Player> = emptyList(),
     val secretWord: String = "",
@@ -11,6 +14,7 @@ data class GameState(
     val impostorHint: String? = null
 )
 
+@Serializable
 data class RoundHistory(
     val roundNumber: Int,
     val clues: Map<Int, String>, // playerId -> clue

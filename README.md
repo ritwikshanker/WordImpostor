@@ -21,7 +21,7 @@ Players give one-word clues, discuss, and vote to eliminate suspects.
 - Material 3 Design with dark mode
 - MVVM architecture with StateFlow
 - Settings persistence with DataStore
-- Rotation-safe state management
+- State survives rotation and process death (SavedStateHandle)
 
 ## Project Structure
 

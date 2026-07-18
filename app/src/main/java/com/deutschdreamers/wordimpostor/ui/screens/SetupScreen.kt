@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -78,7 +80,10 @@ fun SetupScreen(
             ) {
                 IconButton(
                     onClick = { if (playerCount > 3) playerCount-- },
-                    enabled = playerCount > 3
+                    enabled = playerCount > 3,
+                    modifier = Modifier.semantics {
+                        contentDescription = "Decrease number of players"
+                    }
                 ) {
                     Text("-", style = MaterialTheme.typography.headlineMedium)
                 }
@@ -93,7 +98,7 @@ fun SetupScreen(
                     onClick = { if (playerCount < 12) playerCount++ },
                     enabled = playerCount < 12
                 ) {
-                    Icon(Icons.Default.Add, "Increase")
+                    Icon(Icons.Default.Add, "Increase number of players")
                 }
             }
 
@@ -114,7 +119,10 @@ fun SetupScreen(
             ) {
                 IconButton(
                     onClick = { if (impostorCount > 1) impostorCount-- },
-                    enabled = impostorCount > 1
+                    enabled = impostorCount > 1,
+                    modifier = Modifier.semantics {
+                        contentDescription = "Decrease number of impostors"
+                    }
                 ) {
                     Text("-", style = MaterialTheme.typography.headlineMedium)
                 }
@@ -129,7 +137,7 @@ fun SetupScreen(
                     onClick = { if (impostorCount < 3 && impostorCount < playerCount - 1) impostorCount++ },
                     enabled = impostorCount < 3 && impostorCount < playerCount - 1
                 ) {
-                    Icon(Icons.Default.Add, "Increase")
+                    Icon(Icons.Default.Add, "Increase number of impostors")
                 }
             }
 

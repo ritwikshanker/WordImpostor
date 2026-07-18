@@ -1,5 +1,6 @@
 package com.deutschdreamers.wordimpostor.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.deutschdreamers.wordimpostor.data.model.*
@@ -11,13 +12,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class GameViewModel(
     private val wordRepository: WordRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val savedStateHandle: SavedStateHandle = SavedStateHandle()
 ) : ViewModel() {
 
-    private val _gameState = MutableStateFlow(GameState())
+    private val json = Json { ignoreUnknownKeys = true }
+
+    // Restore any in-progress game so it survives process death (matches the
+    // README's "rotation-safe" claim, now also true across process recreation).
+    private val _gameState = MutableStateFlow(restoreGameState())
     val gameState: StateFlow<GameState> = _gameState.asStateFlow()
 
     private var timerJob: Job? = null
@@ -41,6 +49,17 @@ class GameViewModel(
                 _gameState.value = _gameState.value.copy(settings = settings)
             }
         }
+        // Persist every state change so an in-progress game survives process death.
+        viewModelScope.launch {
+            _gameState.collect { state ->
+                savedStateHandle[SAVED_GAME_KEY] = json.encodeToString(state)
+            }
+        }
+    }
+
+    private fun restoreGameState(): GameState {
+        val saved = savedStateHandle.get<String>(SAVED_GAME_KEY) ?: return GameState()
+        return runCatching { json.decodeFromString<GameState>(saved) }.getOrDefault(GameState())
     }
 
     fun startGame(
@@ -360,6 +379,10 @@ class GameViewModel(
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()
+    }
+
+    private companion object {
+        const val SAVED_GAME_KEY = "game_state"
     }
 }
 

@@ -1,5 +1,23 @@
 # Changelog
 
+## Version 3.6.0 (2026-07-15)
+
+### 💾 Reliability & Accessibility
+
+- **Never lose a game**: an in-progress game now survives the app being closed by the system in the
+  background — reopen and pick up exactly where you left off.
+- **Large-screen friendly**: the layout now stays centred at a comfortable width on tablets and
+  foldables instead of stretching edge to edge.
+- **Accessibility**: clearer screen-reader labels for the player/impostor steppers and the countdown
+  timer.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.6.0 (version code 10).
+- Game state is persisted via SavedStateHandle (survives process death), with serialization tests.
+
+---
+
 ## Version 3.5.0 (2026-07-15)
 
 ### 📊 Stats & Replay

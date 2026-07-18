@@ -11,16 +11,24 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -90,12 +98,25 @@ fun WordImpostorApp() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                WordImpostorAppContent(
-                    settingsRepository,
-                    wordRepository,
-                    statsRepository,
-                    navController
-                )
+                // Constrain content to a comfortable reading width and centre it, so
+                // the phone-first layouts don't stretch across large tablet screens.
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .widthIn(max = 640.dp)
+                    ) {
+                        WordImpostorAppContent(
+                            settingsRepository,
+                            wordRepository,
+                            statsRepository,
+                            navController
+                        )
+                    }
+                }
             }
         }
     }
@@ -110,10 +131,9 @@ fun WordImpostorAppContent(
 ) {
 
     val gameViewModel: GameViewModel = viewModel(
-        factory = object : androidx.lifecycle.ViewModelProvider.Factory {
-            override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
-                return GameViewModel(wordRepository, settingsRepository) as T
+        factory = viewModelFactory {
+            initializer {
+                GameViewModel(wordRepository, settingsRepository, createSavedStateHandle())
             }
         }
     )

@@ -1,5 +1,8 @@
 package com.deutschdreamers.wordimpostor.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GameSettings(
     val timerEnabled: Boolean = false,
     val timerDuration: Int = 30, // seconds
@@ -16,12 +19,14 @@ data class GameSettings(
     val soundHapticsEnabled: Boolean = true
 )
 
+@Serializable
 enum class TieVoteBehavior {
     NO_ELIMINATION,
     RANDOM_ELIMINATION,
     REVOTE
 }
 
+@Serializable
 enum class ThemeMode {
     SYSTEM,
     LIGHT,
