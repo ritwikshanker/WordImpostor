@@ -25,6 +25,7 @@ fun GameEndScreen(
     secretWord: String,
     roundHistory: List<RoundHistory>,
     startingPlayerId: Int?,
+    onRematch: () -> Unit,
     onPlayAgain: () -> Unit,
     onMainMenu: () -> Unit
 ) {
@@ -261,7 +262,11 @@ fun GameEndScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     // Action Buttons
-                    PrimaryButton(text = "Play Again", onClick = onPlayAgain)
+                    PrimaryButton(text = "Rematch (Same Players)", onClick = onRematch)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    SecondaryButton(text = "New Game", onClick = onPlayAgain)
 
                     Spacer(modifier = Modifier.height(8.dp))
 

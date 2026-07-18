@@ -15,7 +15,8 @@ import com.deutschdreamers.wordimpostor.ui.components.SecondaryButton
 fun HomeScreen(
     onNewGame: () -> Unit,
     onSettings: () -> Unit,
-    onAbout: () -> Unit = {}
+    onAbout: () -> Unit = {},
+    onStats: () -> Unit = {}
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -48,6 +49,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(64.dp))
 
             PrimaryButton(text = "New Game", onClick = onNewGame)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            SecondaryButton(text = "Stats", onClick = onStats)
 
             Spacer(modifier = Modifier.height(16.dp))
 

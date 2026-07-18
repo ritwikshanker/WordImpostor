@@ -32,5 +32,8 @@ sealed interface Screen {
 
     @Serializable
     data object About : Screen
+
+    @Serializable
+    data object Stats : Screen
 }
 

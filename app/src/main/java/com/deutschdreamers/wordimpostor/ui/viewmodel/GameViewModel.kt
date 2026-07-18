@@ -23,6 +23,18 @@ class GameViewModel(
     private var timerJob: Job? = null
     private val currentVotes = mutableMapOf<Int, Int>() // voterId -> votedForPlayerId
 
+    /** Config of the most recent game, used for quick rematch (same players & options). */
+    private var lastGameConfig: GameConfig? = null
+
+    private data class GameConfig(
+        val playerNames: List<String>,
+        val impostorCount: Int,
+        val difficulty: Difficulty,
+        val category: WordCategory
+    )
+
+    fun canRematch(): Boolean = lastGameConfig != null
+
     init {
         viewModelScope.launch {
             settingsRepository.settingsFlow.collect { settings ->
@@ -37,6 +49,9 @@ class GameViewModel(
         difficulty: Difficulty,
         category: WordCategory
     ) {
+        // Remember this config for a quick rematch.
+        lastGameConfig = GameConfig(playerNames, impostorCount, difficulty, category)
+
         // Persist the per-game choices so Setup remembers them next time.
         viewModelScope.launch {
             settingsRepository.updateDifficulty(difficulty)
@@ -75,6 +90,12 @@ class GameViewModel(
             roundHistory = emptyList(),
             impostorHint = impostorHint
         )
+    }
+
+    /** Restart with the same players and options as the last game (fresh roles & word). */
+    fun rematch() {
+        val config = lastGameConfig ?: return
+        startGame(config.playerNames, config.impostorCount, config.difficulty, config.category)
     }
 
     fun revealNextRole() {

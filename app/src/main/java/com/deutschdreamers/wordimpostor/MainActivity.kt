@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.deutschdreamers.wordimpostor.data.model.*
 import com.deutschdreamers.wordimpostor.data.repository.SettingsRepository
+import com.deutschdreamers.wordimpostor.data.repository.StatsRepository
 import com.deutschdreamers.wordimpostor.data.repository.WordRepository
 import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
 import com.deutschdreamers.wordimpostor.feedback.rememberGameFeedback
@@ -51,6 +52,7 @@ fun WordImpostorApp() {
     val navController = rememberNavController()
     val wordRepository = remember { WordRepository() }
     val settingsRepository = remember { SettingsRepository(navController.context) }
+    val statsRepository = remember { StatsRepository(navController.context) }
 
     // Collect settings to get theme preference
     val settings by settingsRepository.settingsFlow.collectAsState(initial = GameSettings())
@@ -88,7 +90,12 @@ fun WordImpostorApp() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                WordImpostorAppContent(settingsRepository, wordRepository, navController)
+                WordImpostorAppContent(
+                    settingsRepository,
+                    wordRepository,
+                    statsRepository,
+                    navController
+                )
             }
         }
     }
@@ -98,6 +105,7 @@ fun WordImpostorApp() {
 fun WordImpostorAppContent(
     settingsRepository: SettingsRepository,
     wordRepository: WordRepository,
+    statsRepository: StatsRepository,
     navController: androidx.navigation.NavHostController
 ) {
 
@@ -136,7 +144,8 @@ fun WordImpostorAppContent(
             HomeScreen(
                 onNewGame = { navController.navigate(Screen.Setup) },
                 onSettings = { navController.navigate(Screen.Settings) },
-                onAbout = { navController.navigate(Screen.About) }
+                onAbout = { navController.navigate(Screen.About) },
+                onStats = { navController.navigate(Screen.Stats) }
             )
         }
 
@@ -295,11 +304,22 @@ fun WordImpostorAppContent(
         composable<Screen.GameEnd> {
             val currentPhase = gameState.currentPhase
             if (currentPhase is GamePhase.GameEnd) {
-                // A finished game is a positive moment: count it and, when the
-                // player has played enough, ask for a Play Store review. The
-                // flow is gated + best-effort, so it never interrupts gameplay.
+                // A finished game is a positive moment: record stats + recap, count
+                // it for the review gate, and (when eligible) ask for a Play Store
+                // review. All best-effort, so it never interrupts gameplay.
                 val context = LocalContext.current
                 LaunchedEffect(Unit) {
+                    val recap = GameRecap(
+                        winner = currentPhase.winner,
+                        secretWord = gameState.secretWord,
+                        categoryLabel = "${gameState.settings.wordCategory.emoji} " +
+                                gameState.settings.wordCategory.displayName,
+                        players = gameState.players.map {
+                            PlayerSummary(it.name, it.role, it.isEliminated)
+                        },
+                        rounds = gameState.roundHistory.size
+                    )
+                    statsRepository.recordGame(recap)
                     settingsRepository.incrementGamesCompleted()
                     (context as? Activity)?.let { activity ->
                         ReviewController.maybeRequestReview(activity, settingsRepository)
@@ -311,6 +331,12 @@ fun WordImpostorAppContent(
                     secretWord = gameState.secretWord,
                     roundHistory = gameState.roundHistory,
                     startingPlayerId = gameState.startingPlayerId,
+                    onRematch = {
+                        gameViewModel.rematch()
+                        navController.navigate(Screen.RoleReveal) {
+                            popUpTo(Screen.Home)
+                        }
+                    },
                     onPlayAgain = {
                         gameViewModel.resetGame()
                         navController.navigate(Screen.Setup) {
@@ -330,6 +356,19 @@ fun WordImpostorAppContent(
         composable<Screen.About> {
             AboutScreen(
                 onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable<Screen.Stats> {
+            val stats by statsRepository.statsFlow.collectAsState(initial = GameStats())
+            val lastRecap by statsRepository.lastRecapFlow.collectAsState(initial = null)
+            StatsScreen(
+                stats = stats,
+                lastRecap = lastRecap,
+                onBack = { navController.popBackStack() },
+                onResetStats = {
+                    scope.launch { statsRepository.resetStats() }
+                }
             )
         }
     }

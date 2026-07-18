@@ -1,5 +1,7 @@
 package com.deutschdreamers.wordimpostor.data.model
 
+import kotlinx.serialization.Serializable
+
 sealed class GamePhase {
     data object NotStarted : GamePhase()
     data class RoleReveal(val currentPlayerIndex: Int) : GamePhase()
@@ -10,6 +12,7 @@ sealed class GamePhase {
     data class GameEnd(val winner: Winner) : GamePhase()
 }
 
+@Serializable
 enum class Winner {
     CIVILIANS,
     IMPOSTORS

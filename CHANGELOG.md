@@ -1,5 +1,25 @@
 # Changelog
 
+## Version 3.5.0 (2026-07-15)
+
+### 📊 Stats & Replay
+
+- **Local stats**: a new Stats screen tracks games played, civilian wins vs. impostor wins, and your
+  civilian win rate — all stored on-device.
+- **Last-game recap**: revisit your most recent game any time — winner, secret word, category, round
+  count, and everyone's roles.
+- **Quick rematch**: after a game, tap **Rematch (Same Players)** to jump straight into a fresh
+  round
+  with the same group and options — no need to re-enter setup.
+- **Reset stats**: clear your history whenever you like from the Stats screen.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.5.0 (version code 9).
+- Added a local stats/recap store and quick-rematch support.
+
+---
+
 ## Version 3.4.0 (2026-07-15)
 
 ### 🎯 New Ways to Play
