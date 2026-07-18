@@ -56,23 +56,4 @@ class WordRepositoryTest {
         }
     }
 
-    @Test
-    fun impostorHint_reflectsCategory_forThemedPacks() {
-        WordCategory.entries.filter { it != WordCategory.MIXED }.forEach { category ->
-            val hint = repository.impostorHint(Difficulty.MEDIUM, category)
-            assertTrue(
-                "Hint for $category should mention its name: '$hint'",
-                hint.contains(category.displayName)
-            )
-        }
-    }
-
-    @Test
-    fun impostorHint_reflectsDifficulty_forMixedPack() {
-        val easy = repository.impostorHint(Difficulty.EASY, WordCategory.MIXED)
-        val hard = repository.impostorHint(Difficulty.HARD, WordCategory.MIXED)
-        // Mixed hint should describe the difficulty band, not name a category.
-        assertTrue("Mixed hint should differ by difficulty", easy != hard)
-        assertTrue("Easy hint should read as a word clue", easy.contains("word"))
-    }
 }

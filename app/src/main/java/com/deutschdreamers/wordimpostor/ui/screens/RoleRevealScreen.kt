@@ -9,9 +9,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.data.model.Role
 import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
@@ -89,7 +91,7 @@ fun RoleRevealScreen(
                         enter = fadeIn(animationSpec = tween(500))
                     ) {
                         PrimaryButton(
-                            text = "Tap to Reveal Role",
+                            text = stringResource(R.string.role_reveal_tap),
                             onClick = {
                                 feedback.heavy()
                                 showRole = true
@@ -124,9 +126,9 @@ fun RoleRevealScreen(
                                 ) {
                                     Text(
                                         text = if (currentPlayer.role == Role.IMPOSTOR)
-                                            "You are the"
+                                            stringResource(R.string.role_reveal_you_are_the)
                                         else
-                                            "You are a",
+                                            stringResource(R.string.role_reveal_you_are_a),
                                         style = MaterialTheme.typography.titleLarge,
                                         textAlign = TextAlign.Center,
                                         modifier = Modifier.fillMaxWidth()
@@ -136,9 +138,9 @@ fun RoleRevealScreen(
 
                                     Text(
                                         text = if (currentPlayer.role == Role.IMPOSTOR)
-                                            "IMPOSTOR"
+                                            stringResource(R.string.role_impostor_caps)
                                         else
-                                            "CIVILIAN",
+                                            stringResource(R.string.role_civilian_caps),
                                         style = MaterialTheme.typography.displaySmall,
                                         fontWeight = FontWeight.Bold,
                                         color = if (currentPlayer.role == Role.IMPOSTOR)
@@ -157,7 +159,7 @@ fun RoleRevealScreen(
                                         Spacer(modifier = Modifier.height(20.dp))
 
                                         Text(
-                                            text = "Your word is:",
+                                            text = stringResource(R.string.role_reveal_your_word),
                                             style = MaterialTheme.typography.bodyLarge,
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier.fillMaxWidth()
@@ -177,7 +179,7 @@ fun RoleRevealScreen(
                                         Spacer(modifier = Modifier.height(12.dp))
 
                                         Text(
-                                            text = "You must blend in without knowing the word!",
+                                            text = stringResource(R.string.role_reveal_blend_in),
                                             style = MaterialTheme.typography.bodyLarge,
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier.fillMaxWidth()
@@ -198,7 +200,7 @@ fun RoleRevealScreen(
                                                     horizontalAlignment = Alignment.CenterHorizontally
                                                 ) {
                                                     Text(
-                                                        text = "🔍 Hint",
+                                                        text = stringResource(R.string.role_reveal_hint_title),
                                                         style = MaterialTheme.typography.labelLarge,
                                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                                     )
@@ -221,7 +223,7 @@ fun RoleRevealScreen(
                             Spacer(modifier = Modifier.height(24.dp))
 
                             PrimaryButton(
-                                text = "Continue",
+                                text = stringResource(R.string.action_continue),
                                 onClick = { showPassMessage = true },
                                 modifier = Modifier.fillMaxWidth(0.8f)
                             )
@@ -248,7 +250,7 @@ fun RoleRevealScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Pass the phone",
+                            text = stringResource(R.string.role_reveal_pass_phone),
                             style = MaterialTheme.typography.displayMedium,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
@@ -258,7 +260,7 @@ fun RoleRevealScreen(
                         Spacer(modifier = Modifier.height(32.dp))
 
                         PrimaryButton(
-                            text = "Next Player",
+                            text = stringResource(R.string.role_reveal_next_player),
                             onClick = onContinue,
                             modifier = Modifier.fillMaxWidth(0.8f)
                         )

@@ -6,8 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 import com.deutschdreamers.wordimpostor.ui.components.SecondaryButton
 
@@ -30,7 +32,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Word Impostor",
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displayLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -40,7 +42,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "A Social Deduction Party Game",
+                text = stringResource(R.string.home_tagline),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -48,19 +50,19 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(64.dp))
 
-            PrimaryButton(text = "New Game", onClick = onNewGame)
+            PrimaryButton(text = stringResource(R.string.home_new_game), onClick = onNewGame)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            SecondaryButton(text = "Stats", onClick = onStats)
+            SecondaryButton(text = stringResource(R.string.home_stats), onClick = onStats)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            SecondaryButton(text = "Settings", onClick = onSettings)
+            SecondaryButton(text = stringResource(R.string.home_settings), onClick = onSettings)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            SecondaryButton(text = "About", onClick = onAbout)
+            SecondaryButton(text = stringResource(R.string.home_about), onClick = onAbout)
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -74,17 +76,13 @@ fun HomeScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "How to Play:",
+                        text = stringResource(R.string.home_how_to_play_title),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "• Civilians receive a secret word\n" +
-                                "• Impostors receive nothing\n" +
-                                "• Give one-word clues\n" +
-                                "• Discuss and vote to eliminate\n" +
-                                "• Find all impostors to win!",
+                        text = stringResource(R.string.home_how_to_play_body),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

@@ -13,13 +13,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Difficulty
 import com.deutschdreamers.wordimpostor.data.model.WordCategory
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
@@ -38,6 +41,9 @@ fun SetupScreen(
     var selectedDifficulty by remember { mutableStateOf(difficulty) }
     var selectedCategory by remember { mutableStateOf(category) }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val decreasePlayersDesc = stringResource(R.string.setup_players_decrease)
+    val decreaseImpostorsDesc = stringResource(R.string.setup_impostors_decrease)
 
     // Update player names list when player count changes
     LaunchedEffect(playerCount) {
@@ -49,10 +55,13 @@ fun SetupScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Game Setup") },
+                title = { Text(stringResource(R.string.setup_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            stringResource(R.string.action_back)
+                        )
                     }
                 }
             )
@@ -67,7 +76,7 @@ fun SetupScreen(
         ) {
             // Player Count
             Text(
-                text = "Number of Players",
+                text = stringResource(R.string.setup_players_label),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -82,7 +91,7 @@ fun SetupScreen(
                     onClick = { if (playerCount > 3) playerCount-- },
                     enabled = playerCount > 3,
                     modifier = Modifier.semantics {
-                        contentDescription = "Decrease number of players"
+                        contentDescription = decreasePlayersDesc
                     }
                 ) {
                     Text("-", style = MaterialTheme.typography.headlineMedium)
@@ -98,7 +107,7 @@ fun SetupScreen(
                     onClick = { if (playerCount < 12) playerCount++ },
                     enabled = playerCount < 12
                 ) {
-                    Icon(Icons.Default.Add, "Increase number of players")
+                    Icon(Icons.Default.Add, stringResource(R.string.setup_players_increase))
                 }
             }
 
@@ -106,7 +115,7 @@ fun SetupScreen(
 
             // Impostor Count
             Text(
-                text = "Number of Impostors",
+                text = stringResource(R.string.setup_impostors_label),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -121,7 +130,7 @@ fun SetupScreen(
                     onClick = { if (impostorCount > 1) impostorCount-- },
                     enabled = impostorCount > 1,
                     modifier = Modifier.semantics {
-                        contentDescription = "Decrease number of impostors"
+                        contentDescription = decreaseImpostorsDesc
                     }
                 ) {
                     Text("-", style = MaterialTheme.typography.headlineMedium)
@@ -137,7 +146,7 @@ fun SetupScreen(
                     onClick = { if (impostorCount < 3 && impostorCount < playerCount - 1) impostorCount++ },
                     enabled = impostorCount < 3 && impostorCount < playerCount - 1
                 ) {
-                    Icon(Icons.Default.Add, "Increase number of impostors")
+                    Icon(Icons.Default.Add, stringResource(R.string.setup_impostors_increase))
                 }
             }
 
@@ -145,7 +154,7 @@ fun SetupScreen(
 
             // Word Category
             Text(
-                text = "Word Category",
+                text = stringResource(R.string.setup_category_label),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -158,7 +167,15 @@ fun SetupScreen(
                     FilterChip(
                         selected = selectedCategory == cat,
                         onClick = { selectedCategory = cat },
-                        label = { Text("${cat.emoji} ${cat.displayName}") }
+                        label = {
+                            Text(
+                                stringResource(
+                                    R.string.category_chip,
+                                    cat.emoji,
+                                    stringResource(cat.labelRes)
+                                )
+                            )
+                        }
                     )
                 }
             }
@@ -168,7 +185,7 @@ fun SetupScreen(
             // Difficulty (only affects the Mixed pack)
             val difficultyEnabled = selectedCategory == WordCategory.MIXED
             Text(
-                text = "Difficulty",
+                text = stringResource(R.string.setup_difficulty_label),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = if (difficultyEnabled) {
@@ -179,7 +196,7 @@ fun SetupScreen(
             )
             if (!difficultyEnabled) {
                 Text(
-                    text = "Difficulty applies to the Mixed pack only",
+                    text = stringResource(R.string.setup_difficulty_mixed_note),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -194,7 +211,17 @@ fun SetupScreen(
                         selected = difficultyEnabled && selectedDifficulty == diff,
                         onClick = { selectedDifficulty = diff },
                         enabled = difficultyEnabled,
-                        label = { Text(diff.name) },
+                        label = {
+                            Text(
+                                stringResource(
+                                    when (diff) {
+                                        Difficulty.EASY -> R.string.difficulty_easy
+                                        Difficulty.MEDIUM -> R.string.difficulty_medium
+                                        Difficulty.HARD -> R.string.difficulty_hard
+                                    }
+                                )
+                            )
+                        },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -204,7 +231,7 @@ fun SetupScreen(
 
             // Player Names
             Text(
-                text = "Player Names",
+                text = stringResource(R.string.setup_player_names_label),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -218,7 +245,7 @@ fun SetupScreen(
                             this[index] = newName
                         }
                     },
-                    label = { Text("Player ${index + 1}") },
+                    label = { Text(stringResource(R.string.setup_player_hint, index + 1)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
@@ -237,10 +264,10 @@ fun SetupScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             PrimaryButton(
-                text = "Start Game",
+                text = stringResource(R.string.setup_start_game),
                 onClick = {
                     val names = playerNames.mapIndexed { index, name ->
-                        name.ifEmpty { "Player ${index + 1}" }
+                        name.ifEmpty { context.getString(R.string.setup_player_hint, index + 1) }
                     }
                     onStartGame(names, impostorCount, selectedDifficulty, selectedCategory)
                 }

@@ -154,20 +154,4 @@ class WordRepository {
         }
         return wordList[Random.nextInt(wordList.size)]
     }
-
-    /**
-     * The hint shown to impostors when hint mode is on: the category for a themed pack,
-     * or the difficulty band for a mixed game.
-     */
-    fun impostorHint(difficulty: Difficulty, category: WordCategory): String =
-        if (category == WordCategory.MIXED) {
-            val band = when (difficulty) {
-                Difficulty.EASY -> "an easy, everyday"
-                Difficulty.MEDIUM -> "a medium"
-                Difficulty.HARD -> "a hard, abstract"
-            }
-            "It's $band word"
-        } else {
-            "Category: ${category.emoji} ${category.displayName}"
-        }
 }

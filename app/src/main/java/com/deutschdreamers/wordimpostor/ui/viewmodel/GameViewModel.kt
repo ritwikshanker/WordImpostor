@@ -91,11 +91,6 @@ class GameViewModel(
         // Select secret word from the chosen category/difficulty
         val secretWord = wordRepository.getRandomWord(difficulty, category)
 
-        // Optional impostor hint (category or difficulty band)
-        val impostorHint = if (_gameState.value.settings.impostorHintEnabled) {
-            wordRepository.impostorHint(difficulty, category)
-        } else null
-
         // Determine starting player (must be civilian)
         val civilianIndices = players.indices.filter { players[it].role == Role.CIVILIAN }
         val startingPlayerId = civilianIndices.random()
@@ -106,8 +101,7 @@ class GameViewModel(
             currentPhase = GamePhase.RoleReveal(0),
             settings = _gameState.value.settings,
             startingPlayerId = startingPlayerId,
-            roundHistory = emptyList(),
-            impostorHint = impostorHint
+            roundHistory = emptyList()
         )
     }
 

@@ -13,8 +13,8 @@ android {
         applicationId = "com.deutschdreamers.wordimpostor"
         minSdk = 26
         targetSdk = 36
-        versionCode = 10
-        versionName = "3.6.0"
+        versionCode = 11
+        versionName = "3.7.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

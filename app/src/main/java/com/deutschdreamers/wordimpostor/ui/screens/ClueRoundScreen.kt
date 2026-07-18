@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
 import com.deutschdreamers.wordimpostor.ui.components.CircularTimer
@@ -66,7 +68,7 @@ fun ClueRoundScreen(
 
             // Player Name
             Text(
-                text = "${currentPlayer.name}'s Turn",
+                text = stringResource(R.string.clue_turn, currentPlayer.name),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -76,7 +78,7 @@ fun ClueRoundScreen(
 
             // Clue Input
             Text(
-                text = "Enter your one-word clue:",
+                text = stringResource(R.string.clue_prompt),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -104,7 +106,7 @@ fun ClueRoundScreen(
                 singleLine = true,
                 placeholder = {
                     Text(
-                        "Type one word...",
+                        stringResource(R.string.clue_placeholder),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
@@ -114,7 +116,7 @@ fun ClueRoundScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "One word only, no spaces",
+                text = stringResource(R.string.clue_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -122,7 +124,7 @@ fun ClueRoundScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             PrimaryButton(
-                text = "Submit Clue",
+                text = stringResource(R.string.clue_submit),
                 onClick = { onSubmitClue(clueText.trim()) },
                 enabled = clueText.isNotBlank()
             )
@@ -136,7 +138,7 @@ fun ClueRoundScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Skip (No Clue)")
+                Text(stringResource(R.string.clue_skip))
             }
         }
     }

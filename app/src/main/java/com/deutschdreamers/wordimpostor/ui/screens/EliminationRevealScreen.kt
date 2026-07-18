@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.data.model.Role
 import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
@@ -55,7 +57,7 @@ fun EliminationRevealScreen(
                 )
             ) {
                 Text(
-                    text = "${eliminatedPlayer.name}\nhas been eliminated",
+                    text = stringResource(R.string.elimination_message, eliminatedPlayer.name),
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -86,7 +88,7 @@ fun EliminationRevealScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "They were ",
+                            text = stringResource(R.string.elimination_they_were),
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center
                         )
@@ -95,9 +97,9 @@ fun EliminationRevealScreen(
 
                         Text(
                             text = if (eliminatedPlayer.role == Role.IMPOSTOR)
-                                "an IMPOSTOR"
+                                stringResource(R.string.elimination_role_impostor)
                             else
-                                "a CIVILIAN",
+                                stringResource(R.string.elimination_role_civilian),
                             style = MaterialTheme.typography.displayMedium,
                             fontWeight = FontWeight.Bold,
                             color = if (eliminatedPlayer.role == Role.IMPOSTOR)
@@ -116,7 +118,7 @@ fun EliminationRevealScreen(
                 visible = showButton,
                 enter = fadeIn(animationSpec = tween(500))
             ) {
-                PrimaryButton(text = "Continue", onClick = onContinue)
+                PrimaryButton(text = stringResource(R.string.action_continue), onClick = onContinue)
             }
         }
     }

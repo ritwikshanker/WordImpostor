@@ -43,8 +43,7 @@ class GameStatePersistenceTest {
                     votes = mapOf(0 to 1),
                     eliminatedPlayerId = 1
                 )
-            ),
-            impostorHint = "Category: 🔬 Science & Nature"
+            )
         )
 
         val restored = json.decodeFromString<GameState>(json.encodeToString(original))

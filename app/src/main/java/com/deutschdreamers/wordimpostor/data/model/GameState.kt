@@ -9,9 +9,7 @@ data class GameState(
     val currentPhase: GamePhase = GamePhase.NotStarted,
     val settings: GameSettings = GameSettings(),
     val startingPlayerId: Int? = null,
-    val roundHistory: List<RoundHistory> = emptyList(),
-    // Hint shown to impostors during role reveal when hint mode is on (null = no hint).
-    val impostorHint: String? = null
+    val roundHistory: List<RoundHistory> = emptyList()
 )
 
 @Serializable

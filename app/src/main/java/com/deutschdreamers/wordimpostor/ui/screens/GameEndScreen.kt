@@ -9,9 +9,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.*
 import com.deutschdreamers.wordimpostor.feedback.LocalGameFeedback
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
@@ -78,7 +80,7 @@ fun GameEndScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "Game Over!",
+                            text = stringResource(R.string.game_over),
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
@@ -88,9 +90,9 @@ fun GameEndScreen(
 
                         Text(
                             text = if (winner == Winner.IMPOSTORS)
-                                "IMPOSTORS WIN!"
+                                stringResource(R.string.impostors_win)
                             else
-                                "CIVILIANS WIN!",
+                                stringResource(R.string.civilians_win),
                             style = MaterialTheme.typography.displayMedium,
                             fontWeight = FontWeight.Bold,
                             color = if (winner == Winner.IMPOSTORS)
@@ -125,7 +127,7 @@ fun GameEndScreen(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "The Secret Word Was:",
+                                text = stringResource(R.string.game_end_secret_word),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -151,7 +153,7 @@ fun GameEndScreen(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "Player Roles:",
+                                text = stringResource(R.string.game_end_player_roles),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -169,7 +171,10 @@ fun GameEndScreen(
                                         style = MaterialTheme.typography.bodyLarge
                                     )
                                     Text(
-                                        text = if (player.role == Role.IMPOSTOR) "IMPOSTOR" else "Civilian",
+                                        text = if (player.role == Role.IMPOSTOR)
+                                            stringResource(R.string.role_impostor_caps)
+                                        else
+                                            stringResource(R.string.role_civilian),
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = FontWeight.Bold,
                                         color = if (player.role == Role.IMPOSTOR)
@@ -195,7 +200,10 @@ fun GameEndScreen(
                                 )
                             ) {
                                 Text(
-                                    text = "Starting Player: ${startingPlayer.name}",
+                                    text = stringResource(
+                                        R.string.game_end_starting_player,
+                                        startingPlayer.name
+                                    ),
                                     style = MaterialTheme.typography.bodyLarge,
                                     modifier = Modifier.padding(16.dp)
                                 )
@@ -215,7 +223,7 @@ fun GameEndScreen(
                                     .padding(16.dp)
                             ) {
                                 Text(
-                                    text = "Game Summary:",
+                                    text = stringResource(R.string.game_end_summary),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -223,7 +231,10 @@ fun GameEndScreen(
 
                                 roundHistory.forEach { round ->
                                     Text(
-                                        text = "Round ${round.roundNumber}",
+                                        text = stringResource(
+                                            R.string.game_end_round,
+                                            round.roundNumber
+                                        ),
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = FontWeight.Bold
                                     )
@@ -233,7 +244,11 @@ fun GameEndScreen(
                                         val player = players.find { it.id == playerId }
                                         if (player != null && clue.isNotEmpty()) {
                                             Text(
-                                                text = "${player.name}: $clue",
+                                                text = stringResource(
+                                                    R.string.game_end_clue_line,
+                                                    player.name,
+                                                    clue
+                                                ),
                                                 style = MaterialTheme.typography.bodyMedium
                                             )
                                         }
@@ -243,7 +258,10 @@ fun GameEndScreen(
                                         val eliminatedPlayer = players.find { it.id == round.eliminatedPlayerId }
                                         if (eliminatedPlayer != null) {
                                             Text(
-                                                text = "Eliminated: ${eliminatedPlayer.name}",
+                                                text = stringResource(
+                                                    R.string.game_end_eliminated,
+                                                    eliminatedPlayer.name
+                                                ),
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 fontWeight = FontWeight.Bold,
                                                 color = MaterialTheme.colorScheme.error
@@ -262,15 +280,24 @@ fun GameEndScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     // Action Buttons
-                    PrimaryButton(text = "Rematch (Same Players)", onClick = onRematch)
+                    PrimaryButton(
+                        text = stringResource(R.string.game_end_rematch),
+                        onClick = onRematch
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    SecondaryButton(text = "New Game", onClick = onPlayAgain)
+                    SecondaryButton(
+                        text = stringResource(R.string.game_end_new_game),
+                        onClick = onPlayAgain
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    SecondaryButton(text = "Main Menu", onClick = onMainMenu)
+                    SecondaryButton(
+                        text = stringResource(R.string.game_end_main_menu),
+                        onClick = onMainMenu
+                    )
 
                     Spacer(modifier = Modifier.height(32.dp))
                 }

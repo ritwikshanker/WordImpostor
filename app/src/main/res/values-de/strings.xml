@@ -1,0 +1,182 @@
+<resources>
+    <string name="app_name">Word Impostor</string>
+
+    <!-- Common -->
+    <string name="action_back">Zurück</string>
+    <string name="action_continue">Weiter</string>
+
+    <!-- Roles -->
+    <string name="role_impostor_caps">IMPOSTOR</string>
+    <string name="role_civilian_caps">ZIVILIST</string>
+    <string name="role_impostor">Impostor</string>
+    <string name="role_civilian">Zivilist</string>
+
+    <!-- Home -->
+    <string name="home_tagline">Ein Partyspiel mit sozialer Deduktion</string>
+    <string name="home_new_game">Neues Spiel</string>
+    <string name="home_stats">Statistik</string>
+    <string name="home_settings">Einstellungen</string>
+    <string name="home_about">Über</string>
+    <string name="home_how_to_play_title">So wird gespielt:</string>
+    <string name="home_how_to_play_body">• Zivilisten erhalten ein geheimes Wort\n• Impostoren erhalten nichts\n• Gebt Ein-Wort-Hinweise\n• Diskutiert und stimmt zum Ausschließen ab\n• Findet alle Impostoren, um zu gewinnen!</string>
+
+    <!-- Setup -->
+    <string name="setup_title">Spiel einrichten</string>
+    <string name="setup_players_label">Anzahl der Spieler</string>
+    <string name="setup_players_decrease">Anzahl der Spieler verringern</string>
+    <string name="setup_players_increase">Anzahl der Spieler erhöhen</string>
+    <string name="setup_impostors_label">Anzahl der Impostoren</string>
+    <string name="setup_impostors_decrease">Anzahl der Impostoren verringern</string>
+    <string name="setup_impostors_increase">Anzahl der Impostoren erhöhen</string>
+    <string name="setup_category_label">Wortkategorie</string>
+    <string name="setup_difficulty_label">Schwierigkeit</string>
+    <string name="setup_difficulty_mixed_note">Schwierigkeit gilt nur für das gemischte Paket</string>
+    <string name="setup_player_names_label">Spielernamen</string>
+    <string name="setup_player_hint">Spieler %1$d</string>
+    <string name="setup_start_game">Spiel starten</string>
+
+    <!-- Word categories -->
+    <string name="category_mixed">Gemischt</string>
+    <string name="category_animals">Tiere</string>
+    <string name="category_food">Essen &amp; Trinken</string>
+    <string name="category_places">Orte</string>
+    <string name="category_sports">Sport</string>
+    <string name="category_science">Natur &amp; Wissenschaft</string>
+    <string name="category_chip">%1$s %2$s</string>
+
+    <!-- Difficulty -->
+    <string name="difficulty_easy">Leicht</string>
+    <string name="difficulty_medium">Mittel</string>
+    <string name="difficulty_hard">Schwer</string>
+
+    <!-- Role reveal -->
+    <string name="role_reveal_tap">Zum Aufdecken der Rolle tippen</string>
+    <string name="role_reveal_you_are_the">Du bist der</string>
+    <string name="role_reveal_you_are_a">Du bist ein</string>
+    <string name="role_reveal_your_word">Dein Wort ist:</string>
+    <string name="role_reveal_blend_in">Du musst dich einfügen, ohne das Wort zu kennen!</string>
+    <string name="role_reveal_hint_title">🔍 Hinweis</string>
+    <string name="role_reveal_pass_phone">Gib das Handy weiter</string>
+    <string name="role_reveal_next_player">Nächster Spieler</string>
+
+    <!-- Impostor hint -->
+    <string name="impostor_hint_category">Kategorie: %1$s</string>
+    <string name="impostor_hint_easy">Es ist ein einfaches Alltagswort</string>
+    <string name="impostor_hint_medium">Es ist ein mittelschweres Wort</string>
+    <string name="impostor_hint_hard">Es ist ein schweres, abstraktes Wort</string>
+
+    <!-- Clue round -->
+    <string name="clue_turn">%1$s ist dran</string>
+    <string name="clue_prompt">Gib deinen Ein-Wort-Hinweis ein:</string>
+    <string name="clue_placeholder">Ein Wort eingeben …</string>
+    <string name="clue_hint">Nur ein Wort, keine Leerzeichen</string>
+    <string name="clue_submit">Hinweis abschicken</string>
+    <string name="clue_skip">Überspringen (kein Hinweis)</string>
+    <string name="timer_seconds_remaining">%1$d Sekunden verbleibend</string>
+
+    <!-- Discussion -->
+    <string name="discussion_title">Diskussionszeit</string>
+    <string name="discussion_timer">Diskussions-Timer: %1$d s</string>
+    <string name="discussion_start_timer">Timer starten</string>
+    <string name="discussion_stop_timer">Stopp</string>
+    <string name="discussion_clues_given">Gegebene Hinweise:</string>
+    <string name="discussion_round">Runde %1$d</string>
+    <string name="discussion_prompt">Besprecht die Hinweise und entscheidet, wer der Impostor sein könnte!</string>
+    <string name="discussion_proceed">Zur Abstimmung</string>
+
+    <!-- Voting -->
+    <string name="voting_title">Abstimmungsphase</string>
+    <string name="voting_tally_title">Aktueller Stimmenstand:</string>
+    <string name="voting_who">Wer stimmt ab?</string>
+    <string name="voting_eliminate">Zum Ausschließen abstimmen:</string>
+    <string name="voting_cast">Stimme abgeben</string>
+    <string name="voting_finalize">Abstimmung beenden</string>
+    <string name="voting_tally_line">%1$s: %2$s</string>
+
+    <!-- Elimination reveal -->
+    <string name="elimination_message">%1$s\nwurde ausgeschlossen</string>
+    <string name="elimination_they_were">Diese Person war</string>
+    <string name="elimination_role_impostor">ein IMPOSTOR</string>
+    <string name="elimination_role_civilian">ein ZIVILIST</string>
+
+    <!-- Game end -->
+    <string name="game_over">Spiel vorbei!</string>
+    <string name="impostors_win">IMPOSTOREN GEWINNEN!</string>
+    <string name="civilians_win">ZIVILISTEN GEWINNEN!</string>
+    <string name="game_end_secret_word">Das geheime Wort war:</string>
+    <string name="game_end_player_roles">Spielerrollen:</string>
+    <string name="game_end_starting_player">Startspieler: %1$s</string>
+    <string name="game_end_summary">Spielzusammenfassung:</string>
+    <string name="game_end_round">Runde %1$d</string>
+    <string name="game_end_clue_line">%1$s: %2$s</string>
+    <string name="game_end_eliminated">Ausgeschlossen: %1$s</string>
+    <string name="game_end_rematch">Revanche (gleiche Spieler)</string>
+    <string name="game_end_new_game">Neues Spiel</string>
+    <string name="game_end_main_menu">Hauptmenü</string>
+
+    <!-- Stats -->
+    <string name="stats_title">Statistik</string>
+    <string name="stats_empty">Noch keine Spiele gespielt.\nBeende ein Spiel, um deine Statistik zu erfassen!</string>
+    <string name="stats_overview">Übersicht</string>
+    <string name="stats_games">Spiele</string>
+    <string name="stats_civilian_wins">Zivilisten-Siege</string>
+    <string name="stats_impostor_wins">Impostor-Siege</string>
+    <string name="stats_civilian_winrate">Zivilisten gewinnen in %1$d%% der Fälle</string>
+    <string name="stats_reset">Statistik zurücksetzen</string>
+    <string name="stats_reset_title">Statistik zurücksetzen?</string>
+    <string name="stats_reset_message">Dadurch werden deine Spielstatistik und die letzte Zusammenfassung dauerhaft gelöscht.</string>
+    <string name="stats_reset_confirm">Zurücksetzen</string>
+    <string name="stats_reset_cancel">Abbrechen</string>
+    <string name="stats_last_game">Letztes Spiel</string>
+    <string name="stats_impostors_won">Impostoren haben gewonnen</string>
+    <string name="stats_civilians_won">Zivilisten haben gewonnen</string>
+    <string name="stats_recap_meta">%1$s · %2$s</string>
+    <string name="stats_secret_word">Geheimes Wort: %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_timer_section">Timer-Einstellungen</string>
+    <string name="settings_enable_timer">Timer aktivieren</string>
+    <string name="settings_timer_duration">Timer-Dauer: %1$d Sekunden</string>
+    <string name="settings_duration_chip">%1$ds</string>
+    <string name="settings_theme_section">Design</string>
+    <string name="theme_system">Systemstandard</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="settings_use_device_colors">Gerätefarben verwenden</string>
+    <string name="settings_use_device_colors_desc">An die Material-You-Palette deines Handys anpassen</string>
+    <string name="settings_sound_haptics">Ton &amp; Haptik</string>
+    <string name="settings_sound_haptics_desc">Vibration und Tippgeräusche während des Spiels</string>
+    <string name="settings_gameplay_section">Spielverlauf</string>
+    <string name="settings_impostor_hint">Impostor-Hinweis</string>
+    <string name="settings_impostor_hint_desc">Gib Impostoren einen dezenten Hinweis (Kategorie oder Schwierigkeit)</string>
+    <string name="settings_voting_section">Abstimmungseinstellungen</string>
+    <string name="settings_allow_self_voting">Selbstabstimmung erlauben</string>
+    <string name="settings_tie_behavior">Verhalten bei Gleichstand</string>
+    <string name="tie_no_elimination">Kein Ausschluss</string>
+    <string name="tie_random_elimination">Zufälliger Ausschluss</string>
+    <string name="tie_revote">Neu abstimmen</string>
+    <string name="settings_save">Einstellungen speichern</string>
+
+    <!-- About -->
+    <string name="about_title">Über</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_created_by">Erstellt von</string>
+    <string name="about_author">Deutsch Dreamers</string>
+    <string name="about_made_with">Gemacht mit </string>
+    <string name="about_in"> in </string>
+    <string name="about_by">von </string>
+    <string name="about_description">Ein lokales Partyspiel mit sozialer Deduktion\nfür Freunde und Familie</string>
+    <string name="about_copyright">© 2025 Deutsch Dreamers</string>
+    <string name="about_rights">Alle Rechte vorbehalten</string>
+
+    <!-- Plurals -->
+    <plurals name="vote_count">
+        <item quantity="one">%1$d Stimme</item>
+        <item quantity="other">%1$d Stimmen</item>
+    </plurals>
+    <plurals name="round_count">
+        <item quantity="one">%1$d Runde</item>
+        <item quantity="other">%1$d Runden</item>
+    </plurals>
+</resources>

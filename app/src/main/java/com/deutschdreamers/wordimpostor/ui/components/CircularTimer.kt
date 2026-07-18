@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 
 /**
  * Circular countdown for the clue round. Fills a ring based on time remaining and
@@ -45,10 +47,11 @@ fun CircularTimer(
     }
     val color by animateColorAsState(targetColor, tween(500), label = "timerColor")
 
+    val timerDescription = stringResource(R.string.timer_seconds_remaining, remainingSeconds)
     Box(
         modifier = modifier
             .size(size)
-            .semantics { contentDescription = "$remainingSeconds seconds remaining" },
+            .semantics { contentDescription = timerDescription },
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

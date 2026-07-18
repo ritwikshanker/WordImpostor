@@ -1,5 +1,24 @@
 # Changelog
 
+## Version 3.7.0 (2026-07-15)
+
+### 🌍 Now in German
+
+- **Deutsch / German**: the entire app is now translated into German — every screen, button, and
+  hint. It follows your device language automatically.
+- **Per-app language**: on Android 13+ you can also set Word Impostor's language independently in
+  System Settings → Apps → Word Impostor → Language.
+- Full groundwork for future languages: every piece of text is now externalized and ready to
+  translate.
+
+### 🔧 Technical Improvements
+
+- Version updated to 3.7.0 (version code 11).
+- Externalized all UI strings into resources with a German (values-de) translation; added
+  localeConfig and plural-aware counts.
+
+---
+
 ## Version 3.6.0 (2026-07-15)
 
 ### 💾 Reliability & Accessibility

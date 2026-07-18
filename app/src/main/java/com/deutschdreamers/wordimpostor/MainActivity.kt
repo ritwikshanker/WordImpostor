@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -203,7 +204,7 @@ fun WordImpostorAppContent(
                     RoleRevealScreen(
                         currentPlayer = currentPlayer,
                         secretWord = gameState.secretWord,
-                        impostorHint = gameState.impostorHint,
+                        impostorHint = impostorHintText(gameState.settings),
                         onContinue = {
                             gameViewModel.revealNextRole()
                         }
@@ -328,12 +329,17 @@ fun WordImpostorAppContent(
                 // it for the review gate, and (when eligible) ask for a Play Store
                 // review. All best-effort, so it never interrupts gameplay.
                 val context = LocalContext.current
+                val category = gameState.settings.wordCategory
+                val categoryLabel = stringResource(
+                    R.string.category_chip,
+                    category.emoji,
+                    stringResource(category.labelRes)
+                )
                 LaunchedEffect(Unit) {
                     val recap = GameRecap(
                         winner = currentPhase.winner,
                         secretWord = gameState.secretWord,
-                        categoryLabel = "${gameState.settings.wordCategory.emoji} " +
-                                gameState.settings.wordCategory.displayName,
+                        categoryLabel = categoryLabel,
                         players = gameState.players.map {
                             PlayerSummary(it.name, it.role, it.isEliminated)
                         },
@@ -391,5 +397,30 @@ fun WordImpostorAppContent(
                 }
             )
         }
+    }
+}
+
+/**
+ * Builds the localized impostor hint shown on the role-reveal screen (category for a
+ * themed pack, difficulty band for a mixed game), or null when hint mode is off.
+ */
+@Composable
+private fun impostorHintText(settings: GameSettings): String? {
+    if (!settings.impostorHintEnabled) return null
+    return if (settings.wordCategory == WordCategory.MIXED) {
+        stringResource(
+            when (settings.difficulty) {
+                Difficulty.EASY -> R.string.impostor_hint_easy
+                Difficulty.MEDIUM -> R.string.impostor_hint_medium
+                Difficulty.HARD -> R.string.impostor_hint_hard
+            }
+        )
+    } else {
+        val label = stringResource(
+            R.string.category_chip,
+            settings.wordCategory.emoji,
+            stringResource(settings.wordCategory.labelRes)
+        )
+        stringResource(R.string.impostor_hint_category, label)
     }
 }

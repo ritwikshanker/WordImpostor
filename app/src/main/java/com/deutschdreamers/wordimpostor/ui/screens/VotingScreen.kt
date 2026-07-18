@@ -10,9 +10,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 
@@ -39,7 +42,7 @@ fun VotingScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Voting Phase",
+                text = stringResource(R.string.voting_title),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -60,7 +63,7 @@ fun VotingScreen(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Current Vote Tally:",
+                            text = stringResource(R.string.voting_tally_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -69,7 +72,15 @@ fun VotingScreen(
                             val player = players.find { it.id == playerId }
                             if (player != null) {
                                 Text(
-                                    text = "${player.name}: $voteCount vote(s)",
+                                    text = stringResource(
+                                        R.string.voting_tally_line,
+                                        player.name,
+                                        pluralStringResource(
+                                            R.plurals.vote_count,
+                                            voteCount,
+                                            voteCount
+                                        )
+                                    ),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -81,7 +92,7 @@ fun VotingScreen(
 
             // Voter Selection
             Text(
-                text = "Who is voting?",
+                text = stringResource(R.string.voting_who),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -118,7 +129,7 @@ fun VotingScreen(
             // Vote Target Selection
             if (selectedVoterId != null) {
                 Text(
-                    text = "Vote to eliminate:",
+                    text = stringResource(R.string.voting_eliminate),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -164,7 +175,7 @@ fun VotingScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 PrimaryButton(
-                    text = "Cast Vote",
+                    text = stringResource(R.string.voting_cast),
                     onClick = {
                         if (selectedVoterId != null && selectedVotedForId != null) {
                             onCastVote(selectedVoterId!!, selectedVotedForId!!)
@@ -179,7 +190,7 @@ fun VotingScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             PrimaryButton(
-                text = "Finalize Voting",
+                text = stringResource(R.string.voting_finalize),
                 onClick = onFinalizeVoting,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiary

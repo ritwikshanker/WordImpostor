@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.Player
 import com.deutschdreamers.wordimpostor.ui.components.PrimaryButton
 import kotlinx.coroutines.delay
@@ -43,7 +45,7 @@ fun DiscussionScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Discussion Time",
+                text = stringResource(R.string.discussion_title),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -66,7 +68,7 @@ fun DiscussionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Discussion Timer: $discussionTime s",
+                        text = stringResource(R.string.discussion_timer, discussionTime),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -79,7 +81,7 @@ fun DiscussionScreen(
                             onClick = { timerRunning = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Start Timer")
+                            Text(stringResource(R.string.discussion_start_timer))
                         }
                     } else {
                         Button(
@@ -89,7 +91,7 @@ fun DiscussionScreen(
                             ),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Stop")
+                            Text(stringResource(R.string.discussion_stop_timer))
                         }
                     }
                 }
@@ -98,7 +100,7 @@ fun DiscussionScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Clues Given:",
+                text = stringResource(R.string.discussion_clues_given),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -114,7 +116,7 @@ fun DiscussionScreen(
                 roundHistory.forEach { round ->
                     item {
                         Text(
-                            text = "Round ${round.roundNumber}",
+                            text = stringResource(R.string.discussion_round, round.roundNumber),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.secondary,
@@ -157,7 +159,7 @@ fun DiscussionScreen(
                 // Show current round
                 item {
                     Text(
-                        text = "Round $currentRoundNumber",
+                        text = stringResource(R.string.discussion_round, currentRoundNumber),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
@@ -203,7 +205,7 @@ fun DiscussionScreen(
                 )
             ) {
                 Text(
-                    text = "Discuss the clues and decide who might be the impostor!",
+                    text = stringResource(R.string.discussion_prompt),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(16.dp)
@@ -212,7 +214,10 @@ fun DiscussionScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            PrimaryButton(text = "Proceed to Voting", onClick = onStartVoting)
+            PrimaryButton(
+                text = stringResource(R.string.discussion_proceed),
+                onClick = onStartVoting
+            )
         }
     }
 }

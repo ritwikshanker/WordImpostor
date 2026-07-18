@@ -10,8 +10,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.GameSettings
 import com.deutschdreamers.wordimpostor.data.model.ThemeMode
 import com.deutschdreamers.wordimpostor.data.model.TieVoteBehavior
@@ -37,10 +39,13 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            stringResource(R.string.action_back)
+                        )
                     }
                 }
             )
@@ -61,7 +66,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Timer Settings",
+                        text = stringResource(R.string.settings_timer_section),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -73,7 +78,7 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Enable Timer")
+                        Text(stringResource(R.string.settings_enable_timer))
                         Switch(
                             checked = timerEnabled,
                             onCheckedChange = { timerEnabled = it }
@@ -84,7 +89,7 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = "Timer Duration: $timerDuration seconds",
+                            text = stringResource(R.string.settings_timer_duration, timerDuration),
                             style = MaterialTheme.typography.bodyMedium
                         )
 
@@ -103,7 +108,14 @@ fun SettingsScreen(
                                 FilterChip(
                                     selected = timerDuration == duration,
                                     onClick = { timerDuration = duration },
-                                    label = { Text("${duration}s") },
+                                    label = {
+                                        Text(
+                                            stringResource(
+                                                R.string.settings_duration_chip,
+                                                duration
+                                            )
+                                        )
+                                    },
                                     modifier = Modifier.weight(1f)
                                 )
                             }
@@ -122,7 +134,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Theme",
+                        text = stringResource(R.string.settings_theme_section),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -138,11 +150,13 @@ fun SettingsScreen(
                                 onClick = { themeMode = mode },
                                 label = {
                                     Text(
-                                        when (mode) {
-                                            ThemeMode.SYSTEM -> "System Default"
-                                            ThemeMode.LIGHT -> "Light"
-                                            ThemeMode.DARK -> "Dark"
-                                        }
+                                        stringResource(
+                                            when (mode) {
+                                                ThemeMode.SYSTEM -> R.string.theme_system
+                                                ThemeMode.LIGHT -> R.string.theme_light
+                                                ThemeMode.DARK -> R.string.theme_dark
+                                            }
+                                        )
                                     )
                                 },
                                 modifier = Modifier.fillMaxWidth()
@@ -159,9 +173,9 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Use device colors")
+                                Text(stringResource(R.string.settings_use_device_colors))
                                 Text(
-                                    text = "Match your phone's Material You palette",
+                                    text = stringResource(R.string.settings_use_device_colors_desc),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -191,12 +205,12 @@ fun SettingsScreen(
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Sound & Haptics",
+                                text = stringResource(R.string.settings_sound_haptics),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "Vibration and tap sounds during play",
+                                text = stringResource(R.string.settings_sound_haptics_desc),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -219,7 +233,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Gameplay",
+                        text = stringResource(R.string.settings_gameplay_section),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -232,9 +246,9 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Impostor Hint")
+                            Text(stringResource(R.string.settings_impostor_hint))
                             Text(
-                                text = "Give impostors a subtle clue (the category or difficulty)",
+                                text = stringResource(R.string.settings_impostor_hint_desc),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -257,7 +271,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Voting Settings",
+                        text = stringResource(R.string.settings_voting_section),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -269,7 +283,7 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Allow Self-Voting")
+                        Text(stringResource(R.string.settings_allow_self_voting))
                         Switch(
                             checked = allowSelfVoting,
                             onCheckedChange = { allowSelfVoting = it }
@@ -279,7 +293,7 @@ fun SettingsScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Tie Vote Behavior",
+                        text = stringResource(R.string.settings_tie_behavior),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -295,11 +309,13 @@ fun SettingsScreen(
                                 onClick = { tieVoteBehavior = behavior },
                                 label = {
                                     Text(
-                                        when (behavior) {
-                                            TieVoteBehavior.NO_ELIMINATION -> "No Elimination"
-                                            TieVoteBehavior.RANDOM_ELIMINATION -> "Random Elimination"
-                                            TieVoteBehavior.REVOTE -> "Revote"
-                                        }
+                                        stringResource(
+                                            when (behavior) {
+                                                TieVoteBehavior.NO_ELIMINATION -> R.string.tie_no_elimination
+                                                TieVoteBehavior.RANDOM_ELIMINATION -> R.string.tie_random_elimination
+                                                TieVoteBehavior.REVOTE -> R.string.tie_revote
+                                            }
+                                        )
                                     )
                                 },
                                 modifier = Modifier.fillMaxWidth()
@@ -312,7 +328,7 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             PrimaryButton(
-                text = "Save Settings",
+                text = stringResource(R.string.settings_save),
                 onClick = {
                     onUpdateSettings(
                         GameSettings(

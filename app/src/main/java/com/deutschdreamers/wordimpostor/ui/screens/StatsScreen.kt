@@ -9,9 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.deutschdreamers.wordimpostor.R
 import com.deutschdreamers.wordimpostor.data.model.GameRecap
 import com.deutschdreamers.wordimpostor.data.model.GameStats
 import com.deutschdreamers.wordimpostor.data.model.Role
@@ -31,10 +34,13 @@ fun StatsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Stats") },
+                title = { Text(stringResource(R.string.stats_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            stringResource(R.string.action_back)
+                        )
                     }
                 }
             )
@@ -50,7 +56,7 @@ fun StatsScreen(
             if (stats.gamesPlayed == 0) {
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = "No games played yet.\nFinish a game to start tracking your stats!",
+                        text = stringResource(R.string.stats_empty),
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -65,7 +71,7 @@ fun StatsScreen(
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Overview",
+                        text = stringResource(R.string.stats_overview),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -73,18 +79,18 @@ fun StatsScreen(
                     Row(modifier = Modifier.fillMaxWidth()) {
                         StatTile(
                             value = "${stats.gamesPlayed}",
-                            label = "Games",
+                            label = stringResource(R.string.stats_games),
                             modifier = Modifier.weight(1f)
                         )
                         StatTile(
                             value = "${stats.civilianWins}",
-                            label = "Civilian wins",
+                            label = stringResource(R.string.stats_civilian_wins),
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.weight(1f)
                         )
                         StatTile(
                             value = "${stats.impostorWins}",
-                            label = "Impostor wins",
+                            label = stringResource(R.string.stats_impostor_wins),
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.weight(1f)
                         )
@@ -92,7 +98,7 @@ fun StatsScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     val civilianPct = (stats.civilianWinRate * 100).roundToInt()
                     Text(
-                        text = "Civilians win $civilianPct% of the time",
+                        text = stringResource(R.string.stats_civilian_winrate, civilianPct),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -119,7 +125,7 @@ fun StatsScreen(
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("Reset Stats")
+                Text(stringResource(R.string.stats_reset))
             }
         }
     }
@@ -127,19 +133,19 @@ fun StatsScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("Reset stats?") },
-            text = { Text("This permanently clears your game stats and last-game recap.") },
+            title = { Text(stringResource(R.string.stats_reset_title)) },
+            text = { Text(stringResource(R.string.stats_reset_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showResetDialog = false
                     onResetStats()
                 }) {
-                    Text("Reset")
+                    Text(stringResource(R.string.stats_reset_confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.stats_reset_cancel))
                 }
             }
         )
@@ -177,14 +183,18 @@ private fun LastGameCard(recap: GameRecap) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Last Game",
+                text = stringResource(R.string.stats_last_game),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = if (recap.winner == Winner.IMPOSTORS) "Impostors won" else "Civilians won",
+                text = if (recap.winner == Winner.IMPOSTORS) {
+                    stringResource(R.string.stats_impostors_won)
+                } else {
+                    stringResource(R.string.stats_civilians_won)
+                },
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = if (recap.winner == Winner.IMPOSTORS) {
@@ -195,14 +205,18 @@ private fun LastGameCard(recap: GameRecap) {
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "${recap.categoryLabel} · ${recap.rounds} round(s)",
+                text = stringResource(
+                    R.string.stats_recap_meta,
+                    recap.categoryLabel,
+                    pluralStringResource(R.plurals.round_count, recap.rounds, recap.rounds)
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Secret word: ${recap.secretWord}",
+                text = stringResource(R.string.stats_secret_word, recap.secretWord),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -220,7 +234,11 @@ private fun LastGameCard(recap: GameRecap) {
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        text = if (player.role == Role.IMPOSTOR) "Impostor" else "Civilian",
+                        text = if (player.role == Role.IMPOSTOR) {
+                            stringResource(R.string.role_impostor)
+                        } else {
+                            stringResource(R.string.role_civilian)
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = if (player.role == Role.IMPOSTOR) {
