@@ -12,7 +12,7 @@
     <string name="role_civilian">Zivilist</string>
 
     <!-- Home -->
-    <string name="home_tagline">Ein Partyspiel mit sozialer Deduktion</string>
+    <string name="home_tagline">Ein Wortspiel mit sozialer Deduktion</string>
     <string name="home_new_game">Neues Spiel</string>
     <string name="home_stats">Statistik</string>
     <string name="home_settings">Einstellungen</string>
@@ -166,7 +166,7 @@
     <string name="about_made_with">Gemacht mit </string>
     <string name="about_in"> in </string>
     <string name="about_by">von </string>
-    <string name="about_description">Ein lokales Partyspiel mit sozialer Deduktion\nfür Freunde und Familie</string>
+    <string name="about_description">Ein lokales Wortspiel mit sozialer Deduktion\nfür Freunde und Familie</string>
     <string name="about_copyright">© 2025 Deutsch Dreamers</string>
     <string name="about_rights">Alle Rechte vorbehalten</string>
 

@@ -12,7 +12,7 @@
     <string name="role_civilian">Civilian</string>
 
     <!-- Home -->
-    <string name="home_tagline">A Social Deduction Party Game</string>
+    <string name="home_tagline">A Social Deduction Word Game</string>
     <string name="home_new_game">New Game</string>
     <string name="home_stats">Stats</string>
     <string name="home_settings">Settings</string>
@@ -166,7 +166,7 @@
     <string name="about_made_with">Made with </string>
     <string name="about_in"> in </string>
     <string name="about_by">by </string>
-    <string name="about_description">A local social deduction party game\nfor friends and family</string>
+    <string name="about_description">A local social deduction word game\nfor friends and family</string>
     <string name="about_copyright">© 2025 Deutsch Dreamers</string>
     <string name="about_rights">All rights reserved</string>
 
