@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 3.7.1 (2026-08-07)
+
+### 🛠️ Maintenance Update
+
+- Refined the app's tagline and description to better describe the game ("word game" instead of
+  "party game"), in both English and German.
+- Updated the Android build target (SDK 37) and build tooling for continued compatibility with the
+  latest Android versions.
+
+---
+
 ## Version 3.7.0 (2026-07-15)
 
 ### 🌍 Now in German

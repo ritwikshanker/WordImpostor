@@ -2,6 +2,8 @@
 
 A local pass-the-phone social deduction word game built with Kotlin and Jetpack Compose.
 
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.deutschdreamers.wordimpostor)
+
 ## Overview
 
 **Civilians** receive the same secret word. **Impostors** receive nothing and must blend in.  
