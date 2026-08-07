@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.deutschdreamers.wordimpostor"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.deutschdreamers.wordimpostor"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 12
         versionName = "3.7.1"
 
